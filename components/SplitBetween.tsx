@@ -1,6 +1,6 @@
 import { atom, Atom, useAtom } from "jotai";
 import { useState } from "react";
-import { ListGroup } from "react-bootstrap";
+import { Button, Form, ListGroup } from "react-bootstrap";
 import Person, { IPerson } from "./Person";
 
 export interface Props {
@@ -19,37 +19,37 @@ export default function SplitBetween({ splitBetweenAtom }: Props) {
 
   const addPerson = (e) => {
     e.preventDefault();
-    setSplitBetween([...splitBetween, atom({ name: input })]);
+    const person = { name: atom(input) };
+    setSplitBetween([...splitBetween, atom(person)]);
     setEditing(false);
   };
 
   return (
     <div>
       Split between ({splitBetween.length}):
-      <ListGroup horizontal>
-        {splitBetween.map((a, i) => (
-          <Person
-            personAtom={a}
-            key={`split-${i}`}
-            splitBetweenAtom={splitBetweenAtom}
-          />
-        ))}
-        <ListGroup.Item onClick={startEditing}>
-          {editing ? (
-            <form onSubmit={addPerson}>
-              <input
-                autoFocus={true}
-                type="text"
-                value={input}
-                onBlur={(_) => setEditing(false)}
-                onInput={(e) => setInput(e.target.value)}
-              />
-            </form>
-          ) : (
-            "[+]"
-          )}
-        </ListGroup.Item>
-      </ListGroup>
+      {splitBetween.map((a, i) => (
+        <Person
+          personAtom={a}
+          key={`split-${i}`}
+          splitBetweenAtom={splitBetweenAtom}
+        />
+      ))}
+      <Button onClick={startEditing} variant="default">
+        {editing ? (
+          <Form onSubmit={addPerson}>
+            <Form.Control
+              autoFocus={true}
+              type="text"
+              value={input}
+              placeholder="Add person to split with..."
+              onBlur={(_) => setEditing(false)}
+              onInput={(e) => setInput(e.target.value)}
+            />
+          </Form>
+        ) : (
+          "[+]"
+        )}
+      </Button>
     </div>
   );
 }

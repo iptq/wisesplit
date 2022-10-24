@@ -2,8 +2,15 @@ import { Atom, useAtom } from "jotai";
 import { useState } from "react";
 import styled from "styled-components";
 
-export interface Props {
-  valueAtom: Atom<number>;
+export interface CanBeConvertedToString {
+  toString(): string;
+}
+
+export interface Props<T extends CanBeConvertedToString> {
+  valueAtom: Atom<T>;
+  formatter?: (arg: T) => string;
+  inputType?: string;
+  validator: (arg: string) => T | null;
 }
 
 const ClickableContainer = styled.span`
@@ -12,7 +19,6 @@ const ClickableContainer = styled.span`
   margin: 4px;
   border: 1px solid #eee;
   border-radius: 5px;
-  width: 120px;
 
   &:hover {
     background-color: #eee;
@@ -25,18 +31,17 @@ const EditingBox = styled.input`
   margin: 4px;
   border: 1px solid #eee;
   border-radius: 5px;
-  width: 120px;
 `;
 
-export default function EditBox({ valueAtom }: Props) {
+export default function EditBox<T extends CanBeConvertedToString>({
+  valueAtom,
+  formatter,
+  inputType,
+  validator,
+}: Props<T>) {
   const [value, setValue] = useAtom(valueAtom);
   const [valueInput, setValueInput] = useState("");
   const [editing, setEditing] = useState(false);
-
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
 
   const startEditing = (_: any) => {
     setValueInput(value.toString());
@@ -45,13 +50,10 @@ export default function EditBox({ valueAtom }: Props) {
 
   const finalize = (e: Event) => {
     e.preventDefault();
-    try {
-      const n = parseFloat(valueInput);
-      if (isNaN(n) || !isFinite(n)) return;
-      setValue(n);
+    const validateResult = validator(valueInput);
+    if (validateResult !== null) {
+      setValue(validateResult);
       setEditing(false);
-    } catch (e) {
-      // TODO: Handle
     }
   };
 
@@ -60,7 +62,7 @@ export default function EditBox({ valueAtom }: Props) {
       <form onSubmit={finalize} style={{ display: "inline" }}>
         <EditingBox
           autoFocus={true}
-          type="number"
+          type={inputType ?? "text"}
           step="0.01"
           value={valueInput}
           onBlur={finalize}
@@ -71,7 +73,7 @@ export default function EditBox({ valueAtom }: Props) {
   } else {
     return (
       <ClickableContainer onClick={startEditing}>
-        {formatter.format(value)}
+        {formatter ? formatter(value) : value.toString()}
       </ClickableContainer>
     );
   }

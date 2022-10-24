@@ -1,18 +1,22 @@
 import { Atom, useAtom } from "jotai";
 import { Badge, Card } from "react-bootstrap";
+import { moneyFormatter } from "../lib/formatter";
 import { receiptAtom } from "../lib/state";
 import EditBox from "./EditBox";
+import NumberEditBox from "./NumberEditBox";
 import { IPerson } from "./Person";
 import SplitBetween from "./SplitBetween";
 
 export interface IReceiptItem {
-  name: string;
+  name: Atom<string>;
   price: Atom<number>;
   splitBetween: Atom<Atom<IPerson>[]>;
 }
 
 function Price({ priceAtom }) {
-  return <EditBox valueAtom={priceAtom} />;
+  return (
+    <NumberEditBox valueAtom={priceAtom} formatter={moneyFormatter.format} />
+  );
 }
 
 export interface Props {
@@ -31,7 +35,9 @@ export default function ReceiptItem({ itemAtom }: Props) {
     <Card>
       <Card.Header>
         <Card.Title className="d-flex justify-content-between align-items-center">
-          <h3>{item.name}</h3>
+          <h3>
+            <EditBox valueAtom={item.name} validator={(s) => s} />
+          </h3>
           <span>
             <Price priceAtom={item.price} />
             <Badge

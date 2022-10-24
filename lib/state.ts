@@ -22,32 +22,33 @@ export const receiptTotalAtom = atom((get) => {
     subtotalSum += price;
     for (const personAtom of splitBetween) {
       const person = get(personAtom);
-      const personName = person.name;
+      const personName = get(person.name);
       let accum = totals.get(personName) || 0;
       accum += eachPrice;
       totals.set(personName, accum);
     }
   }
 
-  if (subtotalSum == 0) return totals;
+  if (subtotalSum == 0) return { subtotal: subtotalSum, totalMap: totals };
 
   const newTotals = new Map();
   const proportion = totalValue / subtotalSum;
   for (const [person, value] of totals.entries()) {
     newTotals.set(person, value * proportion);
   }
-  return newTotals;
+  return { subtotal: subtotalSum, totalMap: newTotals };
 });
 
 export function addLine(line: string, setReceipt) {
   let parsed = parseInput(line);
   console.log(parsed);
+  const name = atom(parsed.itemName);
   const price = atom(parsed.price || 0);
   const splitBetween = atom(
     [...parsed.splitBetween].map((a) => atom({ name: a }))
   );
   setReceipt((prev) => [
     ...prev,
-    atom<IReceiptItem>({ name: parsed.itemName, price, splitBetween }),
+    atom<IReceiptItem>({ name, price, splitBetween }),
   ]);
 }

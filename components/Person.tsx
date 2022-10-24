@@ -1,13 +1,14 @@
 import { Atom, useAtom, WritableAtom } from "jotai";
 import { Badge, ListGroup } from "react-bootstrap";
+import EditBox from "./EditBox";
 
 export interface IPerson {
-  name: string;
+  name: Atom<string>;
 }
 
 export interface Props {
   personAtom: Atom<IPerson>;
-  splitBetweenAtom: WritableAtom<Atom<IPerson>[]>;
+  splitBetweenAtom: Atom<Atom<IPerson>[]>;
 }
 
 export default function Person({ personAtom, splitBetweenAtom }: Props) {
@@ -19,8 +20,9 @@ export default function Person({ personAtom, splitBetweenAtom }: Props) {
   };
 
   return (
-    <ListGroup.Item>
-      {person.name}
+    <>
+      <EditBox valueAtom={person.name} validator={(s) => s} />
+
       <Badge
         bg="danger"
         pill
@@ -29,6 +31,6 @@ export default function Person({ personAtom, splitBetweenAtom }: Props) {
       >
         &times;
       </Badge>
-    </ListGroup.Item>
+    </>
   );
 }
