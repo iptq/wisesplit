@@ -51,26 +51,25 @@ const Home: NextPage = () => {
         <EditBox valueAtom={totalAtom} />
       </div>
 
-      <ul>
-        {receipt.map((itemAtom, i) => {
-          return (
-            <li key={`receiptItem-${i}`}>
-              <ReceiptItem itemAtom={itemAtom} />
-            </li>
-          );
-        })}
-      </ul>
+      {receipt.map((itemAtom, i) => {
+        return <ReceiptItem itemAtom={itemAtom} key={`receiptItem-${i}`} />;
+      })}
 
-      <div>
-        Total breakdown:
-        <ul>
-          {[...total.entries()].map(([person, value], i) => (
-            <li key={`breakdown-${i}`}>
-              <b>{person}</b>: {formatter.format(value)}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {total.size > 0 && (
+        <>
+          <h3>Weighted Breakdown</h3>
+
+          <div>
+            <ul>
+              {[...total.entries()].map(([person, value], i) => (
+                <li key={`breakdown-${i}`}>
+                  <b>{person}</b>: {formatter.format(value)}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      )}
 
       <small>
         <a href="https://github.com/iptq/wisesplit/">[source]</a>

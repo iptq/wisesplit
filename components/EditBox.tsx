@@ -8,9 +8,25 @@ export interface Props {
 }
 
 const ClickableContainer = styled.span`
+  display: inline-block;
+  padding: 4px 10px;
+  margin: 4px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  width: 120px;
+
   &:hover {
     background-color: #eee;
   }
+`;
+
+const EditingBox = styled.input`
+  display: inline-block;
+  padding: 4px 10px;
+  margin: 4px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  width: 120px;
 `;
 
 export default function EditBox({ valueAtom }: Props) {
@@ -32,6 +48,7 @@ export default function EditBox({ valueAtom }: Props) {
     e.preventDefault();
     try {
       const n = parseFloat(valueInput);
+      if (isNaN(n) || !isFinite(n)) return;
       setValue(n);
       setEditing(false);
     } catch (e) {
@@ -42,7 +59,7 @@ export default function EditBox({ valueAtom }: Props) {
   if (editing) {
     return (
       <form onSubmit={finalize} style={{ display: "inline" }}>
-        <input
+        <EditingBox
           autoFocus={true}
           type="number"
           step="0.01"
