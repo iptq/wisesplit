@@ -1,4 +1,4 @@
-import { Atom, useAtom } from "jotai";
+import { Atom, useAtom, WritableAtom } from "jotai";
 import { Badge, ListGroup } from "react-bootstrap";
 
 export interface IPerson {
@@ -7,6 +7,7 @@ export interface IPerson {
 
 export interface Props {
   personAtom: Atom<IPerson>;
+  splitBetweenAtom: WritableAtom<Atom<IPerson>[]>;
 }
 
 export default function Person({ personAtom, splitBetweenAtom }: Props) {

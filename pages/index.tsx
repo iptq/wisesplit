@@ -42,7 +42,7 @@ const Home: NextPage = () => {
           placeholder="Add item..."
           onInput={(e) => setInput(e.target.value)}
           value={input}
-          style={{ padding: "8px", fontSize: "1.5em" }}
+          style={{ padding: "8px 16px", fontSize: "1.5em" }}
         />
       </Form>
 
@@ -70,12 +70,6 @@ const Home: NextPage = () => {
           </div>
         </>
       )}
-
-      <small>
-        <a href="https://github.com/iptq/wisesplit/">[source]</a>
-        &middot;
-        <a href="https://www.gnu.org/licenses/agpl-3.0.txt">[license]</a>
-      </small>
     </main>
   );
 };

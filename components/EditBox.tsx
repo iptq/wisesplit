@@ -1,6 +1,5 @@
 import { Atom, useAtom } from "jotai";
 import { useState } from "react";
-import { Form } from "react-bootstrap";
 import styled from "styled-components";
 
 export interface Props {
