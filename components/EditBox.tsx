@@ -1,7 +1,11 @@
-import { useAtom } from "jotai";
+import { Atom, useAtom } from "jotai";
 import { useState } from "react";
 
-export default function EditBox({ valueAtom }) {
+export interface Props {
+  valueAtom: Atom<number>;
+}
+
+export default function EditBox({ valueAtom }: Props) {
   const [value, setValue] = useAtom(valueAtom);
   const [valueInput, setValueInput] = useState("");
   const [editing, setEditing] = useState(false);
@@ -11,12 +15,12 @@ export default function EditBox({ valueAtom }) {
     currency: "USD",
   });
 
-  const startEditing = (_) => {
+  const startEditing = (_: any) => {
     setValueInput(value.toString());
     setEditing(true);
   };
 
-  const finalize = (e) => {
+  const finalize = (e: Event) => {
     e.preventDefault();
     try {
       const n = parseFloat(valueInput);

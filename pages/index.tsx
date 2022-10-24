@@ -74,21 +74,23 @@ const Home: NextPage = () => {
     <main>
       <h2>Items</h2>
 
-      <div>
-        Receipt Total:
-        <EditBox valueAtom={totalAtom} />
-      </div>
-
       <form onSubmit={add}>
         <ParsedInputDisplay input={input} />
 
         <input
+          autoFocus={true}
           type="text"
           placeholder="Add item..."
           onInput={(e) => setInput(e.target.value)}
           value={input}
+          style={{ padding: "8px", fontSize: "1.5em" }}
         />
       </form>
+
+      <div>
+        Receipt Total:
+        <EditBox valueAtom={totalAtom} />
+      </div>
 
       <ul>
         {receipt.map((itemAtom, i) => {
