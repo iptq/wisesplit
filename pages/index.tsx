@@ -1,48 +1,16 @@
-import { atom, PrimitiveAtom, useAtom } from "jotai";
-import { selectAtom } from "jotai/utils";
+import { atom, useAtom } from "jotai";
 import type { NextPage } from "next";
 import { useState } from "react";
+import { Form } from "react-bootstrap";
 import EditBox from "../components/EditBox";
 import ReceiptItem, { IReceiptItem } from "../components/ReceiptItem";
-import Totals from "../components/Totals";
 import parseInput, { ParsedInputDisplay } from "../lib/parseInput";
-
-const totalAtom = atom(0);
-const receiptAtom = atom<PrimitiveAtom<IReceiptItem>[]>([]);
-
-const receiptTotalAtom = atom((get) => {
-  const totalValue = get(totalAtom);
-  const receipt = get(receiptAtom);
-
-  const totals = new Map();
-  let subtotalSum = 0;
-  for (const itemAtom of receipt) {
-    const item = get(itemAtom);
-    const price = get(item.price);
-    const splitBetween = get(item.splitBetween);
-    const numSplitters = splitBetween.length;
-    if (numSplitters == 0) continue;
-
-    const eachPrice = price / numSplitters;
-    subtotalSum += price;
-    for (const personAtom of splitBetween) {
-      const person = get(personAtom);
-      const personName = person.name;
-      let accum = totals.get(personName) || 0;
-      accum += eachPrice;
-      totals.set(personName, accum);
-    }
-  }
-
-  if (subtotalSum == 0) return totals;
-
-  const newTotals = new Map();
-  const proportion = totalValue / subtotalSum;
-  for (const [person, value] of totals.entries()) {
-    newTotals.set(person, value * proportion);
-  }
-  return newTotals;
-});
+import {
+  addLine,
+  receiptAtom,
+  receiptTotalAtom,
+  totalAtom,
+} from "../lib/state";
 
 const Home: NextPage = () => {
   const [receipt, setReceipt] = useAtom(receiptAtom);
@@ -56,28 +24,19 @@ const Home: NextPage = () => {
 
   const add = (e) => {
     e.preventDefault();
-    let parsed = parseInput(input);
-    console.log(parsed);
-    const price = atom(parsed.price || 0);
-    const splitBetween = atom(
-      [...parsed.splitBetween].map((a) => atom({ name: a }))
-    );
-    setReceipt((prev) => [
-      ...prev,
-      atom<IReceiptItem>({ name: parsed.itemName, price, splitBetween }),
-    ]);
+    addLine(input, setReceipt);
     setInput("");
     return false;
   };
 
   return (
     <main>
-      <h2>Items</h2>
+      <h1>Items</h1>
 
-      <form onSubmit={add}>
+      <Form onSubmit={add}>
         <ParsedInputDisplay input={input} />
 
-        <input
+        <Form.Control
           autoFocus={true}
           type="text"
           placeholder="Add item..."
@@ -85,7 +44,7 @@ const Home: NextPage = () => {
           value={input}
           style={{ padding: "8px", fontSize: "1.5em" }}
         />
-      </form>
+      </Form>
 
       <div>
         Receipt Total:
@@ -112,6 +71,12 @@ const Home: NextPage = () => {
           ))}
         </ul>
       </div>
+
+      <small>
+        <a href="https://github.com/iptq/wisesplit/">[source]</a>
+        &middot;
+        <a href="https://www.gnu.org/licenses/agpl-3.0.txt">[license]</a>
+      </small>
     </main>
   );
 };

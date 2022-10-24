@@ -1,9 +1,17 @@
 import { Atom, useAtom } from "jotai";
 import { useState } from "react";
+import { Form } from "react-bootstrap";
+import styled from "styled-components";
 
 export interface Props {
   valueAtom: Atom<number>;
 }
+
+const ClickableContainer = styled.span`
+  &:hover {
+    background-color: #eee;
+  }
+`;
 
 export default function EditBox({ valueAtom }: Props) {
   const [value, setValue] = useAtom(valueAtom);
@@ -45,6 +53,10 @@ export default function EditBox({ valueAtom }: Props) {
       </form>
     );
   } else {
-    return <span onClick={startEditing}>{formatter.format(value)}</span>;
+    return (
+      <ClickableContainer onClick={startEditing}>
+        {formatter.format(value)}
+      </ClickableContainer>
+    );
   }
 }

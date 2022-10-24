@@ -1,11 +1,11 @@
 import { Atom, useAtom } from "jotai";
 import EditBox from "./EditBox";
-import Person from "./Person";
+import Person, { IPerson } from "./Person";
 
 export interface IReceiptItem {
   name: string;
   price: Atom<number>;
-  splitBetween: Atom<Atom<string>[]>;
+  splitBetween: Atom<Atom<IPerson>[]>;
 }
 
 export interface Props {
