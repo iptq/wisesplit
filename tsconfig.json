@@ -1,16 +1,21 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "downlevelIteration": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
     "esModuleInterop": true,
-    "target": "ESNext",
-    "module": "ESNext",
+    "module": "esnext",
     "moduleResolution": "node",
-    "jsxImportSource": "solid-js",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
     "jsx": "preserve",
-    "types": ["vite/client"],
-    "baseUrl": "./",
-    "paths": {
-      "~/*": ["./src/*"]
-    }
-  }
+    "incremental": true
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }

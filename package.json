@@ -1,24 +1,27 @@
 {
-  "name": "splitwise",
+  "name": "wisesplit",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "solid-start dev",
-    "build": "solid-start build",
-    "start": "solid-start start"
-  },
-  "type": "module",
-  "devDependencies": {
-    "solid-start-node": "^0.2.0",
-    "typescript": "^4.8.4",
-    "vite": "^3.1.8"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@solidjs/meta": "^0.28.0",
-    "@solidjs/router": "^0.5.0",
-    "solid-js": "^1.6.0",
-    "solid-start": "^0.2.0",
-    "undici": "^5.11.0"
+    "@reduxjs/toolkit": "^1.8.6",
+    "jotai": "^1.8.6",
+    "next": "12.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-redux": "^8.0.4"
   },
-  "engines": {
-    "node": ">=16"
+  "devDependencies": {
+    "@types/node": "18.11.4",
+    "@types/react": "18.0.21",
+    "@types/react-dom": "18.0.6",
+    "eslint": "8.26.0",
+    "eslint-config-next": "12.3.1",
+    "typescript": "4.8.4"
   }
 }
