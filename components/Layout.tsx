@@ -15,11 +15,19 @@ export default function Layout({ children }) {
 
       <footer style={{ textAlign: "center" }}>
         <small>
-          <a href="https://github.com/iptq/wisesplit/" target="_blank">
+          <a
+            href="https://github.com/iptq/wisesplit/"
+            target="_blank"
+            rel="noreferrer"
+          >
             [source]
           </a>
           &middot;
-          <a href="https://www.gnu.org/licenses/agpl-3.0.txt" target="_blank">
+          <a
+            href="https://www.gnu.org/licenses/agpl-3.0.txt"
+            target="_blank"
+            rel="noreferrer"
+          >
             [license]
           </a>
           &middot;
