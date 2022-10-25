@@ -1,5 +1,7 @@
 import { atom, PrimitiveAtom } from "jotai";
-import { IReceiptItem } from "../components/ReceiptItem";
+import { SetAtom } from "jotai/core/atom";
+import { IPerson } from "../components/Person";
+import { IReceiptItem, Receipt } from "../components/ReceiptItem";
 import parseInput from "./parseInput";
 
 export const totalAtom = atom(0);
@@ -39,16 +41,23 @@ export const receiptTotalAtom = atom((get) => {
   return { subtotal: subtotalSum, totalMap: newTotals };
 });
 
-export function addLine(line: string, setReceipt) {
+export function addLine(
+  line: string,
+  receipt: Receipt,
+  setReceipt: SetAtom<Receipt, void>
+) {
   let parsed = parseInput(line);
-  console.log(parsed);
-  const name = atom(parsed.itemName);
-  const price = atom(parsed.price || 0);
-  const splitBetween = atom(
-    [...parsed.splitBetween].map((a) => atom({ name: a }))
-  );
-  setReceipt((prev) => [
-    ...prev,
-    atom<IReceiptItem>({ name, price, splitBetween }),
-  ]);
+
+  const name: PrimitiveAtom<string> = atom(parsed.itemName);
+  const price: PrimitiveAtom<number> = atom(parsed.price || 0);
+  const splitBetween: PrimitiveAtom<PrimitiveAtom<IPerson>[]> = atom<
+    PrimitiveAtom<IPerson>[]
+  >([...parsed.splitBetween].map((a) => atom<IPerson>({ name: atom(a) })));
+
+  const newReceiptItem = atom({
+    name,
+    price,
+    splitBetween,
+  });
+  setReceipt([...receipt, newReceiptItem]);
 }

@@ -1,6 +1,10 @@
 import { Container, Navbar } from "react-bootstrap";
 
-export default function Layout({ children }) {
+export interface Props {
+  children: JSX.Element;
+}
+
+export default function Layout({ children }: Props) {
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -31,6 +35,8 @@ export default function Layout({ children }) {
             [license]
           </a>
           &middot;
+
+          {/* eslint-disable @next/next/no-img-element */}
           <a href="https://github.com/iptq/wisesplit/stargazers">
             <img
               alt="GitHub stars"

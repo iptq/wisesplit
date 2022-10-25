@@ -1,10 +1,10 @@
-import { atom, Atom, useAtom } from "jotai";
-import { useState } from "react";
-import { Button, Form, ListGroup } from "react-bootstrap";
+import { atom, PrimitiveAtom, useAtom } from "jotai";
+import { SyntheticEvent, useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import Person, { IPerson } from "./Person";
 
 export interface Props {
-  splitBetweenAtom: Atom<Atom<IPerson>[]>;
+  splitBetweenAtom: PrimitiveAtom<PrimitiveAtom<IPerson>[]>;
 }
 
 export default function SplitBetween({ splitBetweenAtom }: Props) {
@@ -12,14 +12,14 @@ export default function SplitBetween({ splitBetweenAtom }: Props) {
   const [input, setInput] = useState("");
   const [editing, setEditing] = useState(false);
 
-  const startEditing = (_) => {
+  const startEditing = (_: any) => {
     setInput("");
     setEditing(true);
   };
 
-  const addPerson = (e) => {
+  const addPerson = (e: SyntheticEvent) => {
     e.preventDefault();
-    const person = { name: atom(input) };
+    const person: IPerson = { name: atom(input) };
     setSplitBetween([...splitBetween, atom(person)]);
     setEditing(false);
   };
@@ -43,7 +43,7 @@ export default function SplitBetween({ splitBetweenAtom }: Props) {
               value={input}
               placeholder="Add person to split with..."
               onBlur={(_) => setEditing(false)}
-              onInput={(e) => setInput(e.target.value)}
+              onInput={(e) => setInput(e.currentTarget.value)}
             />
           </Form>
         ) : (

@@ -4,7 +4,11 @@ export interface ParsedInput {
   splitBetween: Set<string>;
 }
 
-export function ParsedInputDisplay({ input }) {
+export interface Props {
+  input: string;
+}
+
+export function ParsedInputDisplay({ input }: Props) {
   const parsed = parseInput(input);
 
   const formatter = new Intl.NumberFormat("en-US", {

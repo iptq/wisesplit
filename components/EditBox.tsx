@@ -1,13 +1,9 @@
-import { Atom, useAtom } from "jotai";
-import { useState } from "react";
+import { PrimitiveAtom, useAtom } from "jotai";
+import { SyntheticEvent, useState } from "react";
 import styled from "styled-components";
 
-export interface CanBeConvertedToString {
-  toString(): string;
-}
-
-export interface Props<T extends CanBeConvertedToString> {
-  valueAtom: Atom<T>;
+export interface Props<T> {
+  valueAtom: PrimitiveAtom<T>;
   formatter?: (arg: T) => string;
   inputType?: string;
   validator: (arg: string) => T | null;
@@ -33,7 +29,7 @@ const EditingBox = styled.input`
   border-radius: 5px;
 `;
 
-export default function EditBox<T extends CanBeConvertedToString>({
+export default function EditBox<T>({
   valueAtom,
   formatter,
   inputType,
@@ -44,11 +40,11 @@ export default function EditBox<T extends CanBeConvertedToString>({
   const [editing, setEditing] = useState(false);
 
   const startEditing = (_: any) => {
-    setValueInput(value.toString());
+    setValueInput(String(value));
     setEditing(true);
   };
 
-  const finalize = (e: Event) => {
+  const finalize = (e: SyntheticEvent) => {
     e.preventDefault();
     const validateResult = validator(valueInput);
     if (validateResult !== null) {
@@ -66,14 +62,14 @@ export default function EditBox<T extends CanBeConvertedToString>({
           step="0.01"
           value={valueInput}
           onBlur={finalize}
-          onInput={(e) => setValueInput(e.target.value)}
+          onInput={(e) => setValueInput(e.currentTarget.value)}
         />
       </form>
     );
   } else {
     return (
       <ClickableContainer onClick={startEditing}>
-        {formatter ? formatter(value) : value.toString()}
+        {formatter ? formatter(value) : String(value)}
       </ClickableContainer>
     );
   }

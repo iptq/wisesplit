@@ -1,4 +1,4 @@
-import { Atom, useAtom } from "jotai";
+import { PrimitiveAtom, useAtom } from "jotai";
 import { Badge, Card } from "react-bootstrap";
 import { moneyFormatter } from "../lib/formatter";
 import { receiptAtom } from "../lib/state";
@@ -7,27 +7,23 @@ import NumberEditBox from "./NumberEditBox";
 import { IPerson } from "./Person";
 import SplitBetween from "./SplitBetween";
 
-export interface IReceiptItem {
-  name: Atom<string>;
-  price: Atom<number>;
-  splitBetween: Atom<Atom<IPerson>[]>;
-}
+export type Receipt = PrimitiveAtom<IReceiptItem>[];
 
-function Price({ priceAtom }) {
-  return (
-    <NumberEditBox valueAtom={priceAtom} formatter={moneyFormatter.format} />
-  );
+export interface IReceiptItem {
+  name: PrimitiveAtom<string>;
+  price: PrimitiveAtom<number>;
+  splitBetween: PrimitiveAtom<PrimitiveAtom<IPerson>[]>;
 }
 
 export interface Props {
-  itemAtom: Atom<IReceiptItem>;
+  itemAtom: PrimitiveAtom<IReceiptItem>;
 }
 
 export default function ReceiptItem({ itemAtom }: Props) {
   const [receipt, setReceipt] = useAtom(receiptAtom);
   const [item, _] = useAtom(itemAtom);
 
-  const removeSelf = (_) => {
+  const removeSelf = (_: any) => {
     setReceipt([...receipt.filter((x) => x != itemAtom)]);
   };
 
@@ -39,7 +35,10 @@ export default function ReceiptItem({ itemAtom }: Props) {
             <EditBox valueAtom={item.name} validator={(s) => s} />
           </h3>
           <span>
-            <Price priceAtom={item.price} />
+            <NumberEditBox
+              valueAtom={item.price}
+              formatter={moneyFormatter.format}
+            />
             <Badge
               bg="danger"
               pill

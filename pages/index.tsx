@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import type { NextPage } from "next";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { Form } from "react-bootstrap";
 import NumberEditBox from "../components/NumberEditBox";
 import ReceiptItem from "../components/ReceiptItem";
@@ -24,9 +24,9 @@ const Home: NextPage = () => {
     currency: "USD",
   });
 
-  const add = (e) => {
+  const add = (e: SyntheticEvent) => {
     e.preventDefault();
-    addLine(input, setReceipt);
+    addLine(input, receipt, setReceipt);
     setInput("");
     return false;
   };
@@ -42,7 +42,7 @@ const Home: NextPage = () => {
           autoFocus={true}
           type="text"
           placeholder="Add item..."
-          onInput={(e) => setInput(e.target.value)}
+          onInput={(e) => setInput(e.currentTarget.value)}
           value={input}
           style={{ padding: "8px 16px", fontSize: "1.5em" }}
         />

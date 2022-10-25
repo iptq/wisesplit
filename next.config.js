@@ -7,10 +7,7 @@ const nextConfig = {
     styledComponents: true,
   },
 
-  typescript: {
-    // TODO: Move fast and break things lmao
-    ignoreBuildErrors: true,
-  },
+  typescript: {},
 };
 
 module.exports = nextConfig;

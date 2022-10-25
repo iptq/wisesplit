@@ -1,21 +1,21 @@
-import { Atom, useAtom, WritableAtom } from "jotai";
-import { Badge, ListGroup } from "react-bootstrap";
+import { PrimitiveAtom, useAtom } from "jotai";
+import { Badge } from "react-bootstrap";
 import EditBox from "./EditBox";
 
 export interface IPerson {
-  name: Atom<string>;
+  name: PrimitiveAtom<string>;
 }
 
 export interface Props {
-  personAtom: Atom<IPerson>;
-  splitBetweenAtom: Atom<Atom<IPerson>[]>;
+  personAtom: PrimitiveAtom<IPerson>;
+  splitBetweenAtom: PrimitiveAtom<PrimitiveAtom<IPerson>[]>;
 }
 
 export default function Person({ personAtom, splitBetweenAtom }: Props) {
   const [person] = useAtom(personAtom);
   const [splitBetween, setSplitBetween] = useAtom(splitBetweenAtom);
 
-  const removeSelf = (_) => {
+  const removeSelf = (_: any) => {
     setSplitBetween([...splitBetween.filter((x) => x != personAtom)]);
   };
 
