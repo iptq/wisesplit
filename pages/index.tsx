@@ -70,6 +70,10 @@ const Home: NextPage = () => {
         />
       </Form>
 
+      {receipt.map((itemAtom, i) => {
+        return <ReceiptItem itemAtom={itemAtom} key={`receiptItem-${i}`} />;
+      })}
+
       <div>
         Receipt Total:
         <span style={total < calculated.subtotal ? { color: "red" } : {}}>
@@ -80,9 +84,7 @@ const Home: NextPage = () => {
         </span>
       </div>
 
-      {receipt.map((itemAtom, i) => {
-        return <ReceiptItem itemAtom={itemAtom} key={`receiptItem-${i}`} />;
-      })}
+      <hr />
 
       {calculated.totalMap.size > 0 && (
         <>
