@@ -1,5 +1,6 @@
-import { useAtom } from "jotai";
+import { useAtom, atom } from "jotai";
 import type { NextPage } from "next";
+import { useEffect, useRef } from "react";
 import { SyntheticEvent, useState } from "react";
 import { Form } from "react-bootstrap";
 import NumberEditBox from "../components/NumberEditBox";
@@ -18,18 +19,60 @@ const Home: NextPage = () => {
   const [input, setInput] = useState("");
   const [total] = useAtom(totalAtom);
   const [calculated] = useAtom(receiptTotalAtom);
+  const isAddCalled = useRef(false);
+
+  const [receiptJson] = useAtom(
+    atom((get) => {
+      const receiptJson: any[] = [];
+      for (const itemAtom of receipt) {
+        const receiptItemFromAtom = get(itemAtom);
+        const splitBetweenArray = get(receiptItemFromAtom.splitBetween).map(
+          (personAtom) => ({
+            name: get(get(personAtom).name),
+          })
+        );
+        const receiptItemParsed = {
+          name: get(receiptItemFromAtom.name),
+          price: get(receiptItemFromAtom.price),
+          splitBetween: splitBetweenArray,
+        };
+        receiptJson.push(receiptItemParsed);
+      }
+
+      return receiptJson;
+    })
+  );
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   });
 
-  const add = (e: SyntheticEvent) => {
+  const add = async (e: SyntheticEvent) => {
     e.preventDefault();
+    isAddCalled.current = true;
+
     addLine(input, receipt, setReceipt);
     setInput("");
     return false;
   };
+
+  const receiptJSONString = JSON.stringify(receiptJson);
+  console.log("ASDFASDF", receiptJSONString);
+
+  useEffect(() => {
+    const updateDb = async () => {
+      const response = await fetch("/api/createReceipt", {
+        method: "POST",
+        body: JSON.stringify({ receipts: receiptJson }),
+      });
+      console.log(receiptJSONString);
+    };
+
+    if (isAddCalled.current) {
+      updateDb();
+    }
+  }, [receiptJSONString]);
 
   return (
     <main>
