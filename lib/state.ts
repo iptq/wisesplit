@@ -2,10 +2,22 @@ import { atom, PrimitiveAtom } from "jotai";
 import { SetAtom } from "jotai/core/atom";
 import { IPerson } from "../components/Person";
 import { IReceiptItem, Receipt } from "../components/ReceiptItem";
+import { parseAtomToJSON } from "./parseAtomToJSON";
 import parseInput from "./parseInput";
 
 export const totalAtom = atom(0);
 export const receiptAtom = atom<PrimitiveAtom<IReceiptItem>[]>([]);
+
+export const receiptAtomToJSON = atom((get) => {
+  const receiptJSON: any[] = [];
+  const receipt = get(receiptAtom);
+
+  for (const itemAtom of receipt) {
+    receiptJSON.push(parseAtomToJSON(itemAtom, get));
+  }
+
+  return receiptJSON;
+});
 
 export const receiptTotalAtom = atom((get) => {
   const totalValue = get(totalAtom);

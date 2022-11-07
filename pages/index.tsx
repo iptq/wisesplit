@@ -1,10 +1,10 @@
-import { useAtom, atom } from "jotai";
+import { useAtom, atom, PrimitiveAtom } from "jotai";
 import type { NextPage } from "next";
 import { useEffect, useRef } from "react";
 import { SyntheticEvent, useState } from "react";
 import { Form } from "react-bootstrap";
 import NumberEditBox from "../components/NumberEditBox";
-import ReceiptItem from "../components/ReceiptItem";
+import ReceiptItem, { IReceiptItem } from "../components/ReceiptItem";
 import { moneyFormatter } from "../lib/formatter";
 import { ParsedInputDisplay } from "../lib/parseInput";
 import {
@@ -12,6 +12,7 @@ import {
   receiptAtom,
   receiptTotalAtom,
   totalAtom,
+  receiptAtomToJSON,
 } from "../lib/state";
 
 const Home: NextPage = () => {
@@ -19,29 +20,9 @@ const Home: NextPage = () => {
   const [input, setInput] = useState("");
   const [total] = useAtom(totalAtom);
   const [calculated] = useAtom(receiptTotalAtom);
+  const [receiptJson] = useAtom(receiptAtomToJSON);
+
   const isAddCalled = useRef(false);
-
-  const [receiptJson] = useAtom(
-    atom((get) => {
-      const receiptJson: any[] = [];
-      for (const itemAtom of receipt) {
-        const receiptItemFromAtom = get(itemAtom);
-        const splitBetweenArray = get(receiptItemFromAtom.splitBetween).map(
-          (personAtom) => ({
-            name: get(get(personAtom).name),
-          })
-        );
-        const receiptItemParsed = {
-          name: get(receiptItemFromAtom.name),
-          price: get(receiptItemFromAtom.price),
-          splitBetween: splitBetweenArray,
-        };
-        receiptJson.push(receiptItemParsed);
-      }
-
-      return receiptJson;
-    })
-  );
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -58,13 +39,13 @@ const Home: NextPage = () => {
   };
 
   const receiptJSONString = JSON.stringify(receiptJson);
+
   useEffect(() => {
     const updateDb = async () => {
-      const response = await fetch("/api/createReceipt", {
+      const response = await fetch("/api/updateReceipt", {
         method: "POST",
         body: JSON.stringify({ receipts: receiptJson }),
       });
-      console.log(receiptJSONString);
     };
 
     if (isAddCalled.current) {
