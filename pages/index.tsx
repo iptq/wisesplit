@@ -6,7 +6,6 @@ import { Form } from "react-bootstrap";
 import NumberEditBox from "../components/NumberEditBox";
 import ReceiptItem, { IReceiptItem } from "../components/ReceiptItem";
 import { moneyFormatter } from "../lib/formatter";
-// import { parseAtomToJSON } from "../lib/parseAtomToJSON";
 import { ParsedInputDisplay } from "../lib/parseInput";
 import {
   addLine,
