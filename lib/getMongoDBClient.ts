@@ -6,9 +6,8 @@ const HOSTNAME = process.env.MONGO_HOSTNAME;
 const DATABASE_NAME = process.env.MONGO_DATABASE_NAME;
 const DATABASE_PORT = process.env.MONGO_DATABASE_PORT;
 
-const URI = `mongodb://${USERNAME}:${PASSWORD}@${
-  HOSTNAME ?? "localhost"
-}:${DATABASE_PORT}`;
+const userInfo = USERNAME && PASSWORD ? `${USERNAME}:${PASSWORD}@` : "";
+const URI = `mongodb://${userInfo}${HOSTNAME ?? "localhost"}:${DATABASE_PORT}`;
 
 let db: Db | null = null;
 
