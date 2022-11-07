@@ -58,8 +58,6 @@ const Home: NextPage = () => {
   };
 
   const receiptJSONString = JSON.stringify(receiptJson);
-  console.log("ASDFASDF", receiptJSONString);
-
   useEffect(() => {
     const updateDb = async () => {
       const response = await fetch("/api/createReceipt", {
