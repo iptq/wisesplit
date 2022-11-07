@@ -18,5 +18,7 @@ export const getMongoDBClient = async () => {
   const client = new MongoClient(URI);
 
   await client.connect();
-  return client.db(DATABASENAME);
+  db = client.db(DATABASENAME);
+  
+  return db;
 }
