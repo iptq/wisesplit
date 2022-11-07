@@ -35,7 +35,6 @@ export default function Layout({ children }: Props) {
             [license]
           </a>
           &middot;
-
           {/* eslint-disable @next/next/no-img-element */}
           <a href="https://github.com/iptq/wisesplit/stargazers">
             <img
