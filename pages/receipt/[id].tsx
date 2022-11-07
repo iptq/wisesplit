@@ -6,7 +6,6 @@ import { Form } from "react-bootstrap";
 import NumberEditBox from "components/NumberEditBox";
 import ReceiptItem from "components/ReceiptItem";
 import { moneyFormatter } from "lib/formatter";
-import { unwrapAtom } from "lib/jotaiUtil";
 import { ParsedInputDisplay } from "lib/parseInput";
 import {
   addLine,
@@ -15,14 +14,34 @@ import {
   totalAtom,
   unwrappedReceiptAtom,
 } from "lib/state";
+import { io } from "socket.io-client";
+import { useRouter } from "next/router";
+
+let socket;
 
 const ReceiptPage: NextPage = () => {
+  const router = useRouter();
   const [receipt, setReceipt] = useAtom(receiptAtom);
   const [input, setInput] = useState("");
   const [total] = useAtom(totalAtom);
   const [calculated] = useAtom(receiptTotalAtom);
   const [unwrappedReceipt] = useAtom(unwrappedReceiptAtom);
-  const isAddCalled = useRef(false);
+
+  const { id } = router.query;
+
+  // Connect to the socket server
+  useEffect(() => {
+    const socketInitializer = async () => {
+      await fetch("/api/socket");
+      socket = io();
+
+      socket.on("connect", () => {
+        console.log("connected");
+      });
+    };
+
+    socketInitializer();
+  }, []);
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
