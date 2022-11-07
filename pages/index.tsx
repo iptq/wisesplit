@@ -1,10 +1,10 @@
-import { useAtom, atom, PrimitiveAtom } from "jotai";
+import { useAtom } from "jotai";
 import type { NextPage } from "next";
 import { useEffect, useRef } from "react";
 import { SyntheticEvent, useState } from "react";
 import { Form } from "react-bootstrap";
 import NumberEditBox from "../components/NumberEditBox";
-import ReceiptItem, { IReceiptItem } from "../components/ReceiptItem";
+import ReceiptItem from "../components/ReceiptItem";
 import { moneyFormatter } from "../lib/formatter";
 import { ParsedInputDisplay } from "../lib/parseInput";
 import {
@@ -51,7 +51,7 @@ const Home: NextPage = () => {
     if (isAddCalled.current) {
       updateDb();
     }
-  }, [receiptJSONString]);
+  }, [receiptJSONString, receiptJson]);
 
   return (
     <main>
