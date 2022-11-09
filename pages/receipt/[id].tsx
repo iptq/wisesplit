@@ -27,17 +27,25 @@ const ReceiptPage: NextPage = () => {
   const [calculated] = useAtom(receiptTotalAtom);
   const [unwrappedReceipt] = useAtom(unwrappedReceiptAtom);
 
-  const { id } = router.query;
+  const { pathname } = router;
 
   // Connect to the socket server
   useEffect(() => {
-    const socketInitializer = async () => {
-      await fetch("/api/socket");
-      socket = io();
 
-      socket.on("connect", () => {
-        console.log("connected");
+    console.log(pathname);
+    const socketInitializer = async () => {
+      await fetch("/api/socket", {
+        method: "POST",
+        headers: {
+          "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({ receiptId: id }),
       });
+      // socket = io();
+
+      // socket.on("connect", () => {
+      //   console.log("connected");
+      // });
     };
 
     socketInitializer();
