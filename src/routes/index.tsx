@@ -1,11 +1,15 @@
+import { createSignal } from "solid-js";
 import { Title } from "solid-start";
 import Counter from "~/components/Counter";
+import Receipt from "~/components/Receipt";
 
 export default function Home() {
   return (
     <main>
       <Title>Hello World</Title>
       <h1>Hello world!</h1>
+
+      <Receipt />
       <Counter />
       <p>
         Visit{" "}
