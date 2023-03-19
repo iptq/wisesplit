@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, SyntheticEvent, useState } from "react";
+import {
+  Dispatch,
+  MouseEventHandler,
+  SetStateAction,
+  SyntheticEvent,
+  useState,
+} from "react";
 import { Button, Form } from "react-bootstrap";
 import Person, { IPerson } from "./Person";
 import { IReceiptItem, Receipt } from "./ReceiptItem";
@@ -14,7 +20,7 @@ export default function SplitBetween({ curItem, setReceipt, receipt }: Props) {
   const [input, setInput] = useState("");
   const [editing, setEditing] = useState(false);
 
-  const startEditing = (_: any) => {
+  const startEditing: MouseEventHandler = () => {
     setInput("");
     setEditing(true);
   };
@@ -51,22 +57,22 @@ export default function SplitBetween({ curItem, setReceipt, receipt }: Props) {
           updatePersonName={updatePersonName}
         />
       ))}
-      <Button onClick={startEditing} variant="default">
-        {editing ? (
-          <Form onSubmit={addPerson}>
-            <Form.Control
-              autoFocus={true}
-              type="text"
-              value={input}
-              placeholder="Add person to split with..."
-              onBlur={(_) => setEditing(false)}
-              onInput={(e) => setInput(e.currentTarget.value)}
-            />
-          </Form>
-        ) : (
-          "[+]"
-        )}
-      </Button>
+      {editing ? (
+        <Form onSubmit={addPerson}>
+          <Form.Control
+            autoFocus={true}
+            type="text"
+            value={input}
+            placeholder="Add person to split with..."
+            onBlur={() => setEditing(false)}
+            onInput={(e) => setInput(e.currentTarget.value)}
+          />
+        </Form>
+      ) : (
+        <Button onClick={startEditing} variant="default">
+          [+]
+        </Button>
+      )}
     </div>
   );
 }
