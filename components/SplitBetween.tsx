@@ -1,14 +1,16 @@
-import { atom, PrimitiveAtom, useAtom } from "jotai";
-import { SyntheticEvent, useState } from "react";
+import { Dispatch, SetStateAction, SyntheticEvent, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import Person, { IPerson } from "./Person";
+import { IReceiptItem, Receipt } from "./ReceiptItem";
 
 export interface Props {
-  splitBetweenAtom: PrimitiveAtom<PrimitiveAtom<IPerson>[]>;
+  curItem: IReceiptItem;
+  receipt: Receipt;
+  setReceipt: Dispatch<SetStateAction<Receipt>>;
 }
 
-export default function SplitBetween({ splitBetweenAtom }: Props) {
-  const [splitBetween, setSplitBetween] = useAtom(splitBetweenAtom);
+export default function SplitBetween({ curItem, setReceipt, receipt }: Props) {
+  const { splitBetween } = curItem;
   const [input, setInput] = useState("");
   const [editing, setEditing] = useState(false);
 
@@ -19,9 +21,23 @@ export default function SplitBetween({ splitBetweenAtom }: Props) {
 
   const addPerson = (e: SyntheticEvent) => {
     e.preventDefault();
-    const person: IPerson = { name: atom(input) };
-    setSplitBetween([...splitBetween, atom(person)]);
+    const person: IPerson = { name: input };
+    curItem.splitBetween = [...splitBetween, person];
+    setReceipt([...receipt]);
     setEditing(false);
+  };
+
+  const updatePersonName = (person: IPerson, name: string) => {
+    person.name = name;
+    const newSplitBetween = [...splitBetween];
+    curItem.splitBetween = newSplitBetween;
+    setReceipt([...receipt]);
+  };
+
+  const removePerson = (person: IPerson) => {
+    const newSplitBetween = [...splitBetween.filter((x) => x != person)];
+    curItem.splitBetween = newSplitBetween;
+    setReceipt([...receipt]);
   };
 
   return (
@@ -29,9 +45,10 @@ export default function SplitBetween({ splitBetweenAtom }: Props) {
       Split between ({splitBetween.length}):
       {splitBetween.map((a, i) => (
         <Person
-          personAtom={a}
+          person={a}
           key={`split-${i}`}
-          splitBetweenAtom={splitBetweenAtom}
+          removePerson={removePerson}
+          updatePersonName={updatePersonName}
         />
       ))}
       <Button onClick={startEditing} variant="default">

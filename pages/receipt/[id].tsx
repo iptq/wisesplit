@@ -1,55 +1,60 @@
-import { useAtom, atom } from "jotai";
 import type { NextPage } from "next";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { SyntheticEvent, useState } from "react";
 import { Form } from "react-bootstrap";
 import NumberEditBox from "components/NumberEditBox";
 import ReceiptItem from "components/ReceiptItem";
 import { moneyFormatter } from "lib/formatter";
 import { ParsedInputDisplay } from "lib/parseInput";
-import {
-  addLine,
-  receiptAtom,
-  receiptTotalAtom,
-  totalAtom,
-  unwrappedReceiptAtom,
-} from "lib/state";
-import { io } from "socket.io-client";
+import { addLine } from "lib/state";
+import { io, Socket } from "socket.io-client";
 import { useRouter } from "next/router";
+import { Receipt } from "components/ReceiptItem";
+import { getCalculated } from "lib/getCalculated";
 
-let socket;
+let socket: Socket;
 
 const ReceiptPage: NextPage = () => {
   const router = useRouter();
-  const [receipt, setReceipt] = useAtom(receiptAtom);
+  const [receipt, setReceipt] = useState<Receipt>([]);
   const [input, setInput] = useState("");
-  const [total] = useAtom(totalAtom);
-  const [calculated] = useAtom(receiptTotalAtom);
-  const [unwrappedReceipt] = useAtom(unwrappedReceiptAtom);
+  const [total, setTotal] = useState(0);
+  const calculated = getCalculated(total, receipt);
 
-  const { pathname } = router;
+  const { id } = router.query;
 
   // Connect to the socket server
   useEffect(() => {
-
-    console.log(pathname);
     const socketInitializer = async () => {
       await fetch("/api/socket", {
         method: "POST",
         headers: {
-          "Content-Type": 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ receiptId: id }),
       });
-      // socket = io();
+      socket = io();
 
-      // socket.on("connect", () => {
-      //   console.log("connected");
-      // });
+      socket.on("connect", () => {
+        console.log("client connected");
+      });
+
+      socket.on("update-input", (msg) => {
+        console.log("client", msg);
+      });
     };
 
-    socketInitializer();
-  }, []);
+    if (id) {
+      socketInitializer();
+    }
+  }, [id]);
+
+  const receiptChanged = JSON.stringify(receipt);
+
+  useEffect(() => {
+    console.log("changed");
+    console.log("CURRENT STATE", receipt);
+  }, [receiptChanged]);
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -59,14 +64,15 @@ const ReceiptPage: NextPage = () => {
   const add = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    addLine(input, receipt, setReceipt);
+    const payload = addLine(input, receipt, setReceipt);
 
-    const payload = unwrappedReceipt;
     console.log("Payload", payload);
-    fetch("/api/createReceipt", {
-      method: "POST",
-      body: JSON.stringify(payload),
-    });
+    // fetch("/api/udpateReceipt", {
+    //   method: "POST",
+    //   body: JSON.stringify(payload),
+    // });
+
+    // socket.emit("add-input", "from client");
 
     setInput("");
     return false;
@@ -89,16 +95,24 @@ const ReceiptPage: NextPage = () => {
         />
       </Form>
 
-      {receipt.map((itemAtom, i) => {
-        return <ReceiptItem itemAtom={itemAtom} key={`receiptItem-${i}`} />;
+      {receipt.map((curItem, i) => {
+        return (
+          <ReceiptItem
+            curItem={curItem}
+            receipt={receipt}
+            setReceipt={setReceipt}
+            key={`receiptItem-${i}`}
+          />
+        );
       })}
 
       <div>
         Receipt Total:
         <span style={total < calculated.subtotal ? { color: "red" } : {}}>
           <NumberEditBox
-            valueAtom={totalAtom}
+            valueNumber={total}
             formatter={moneyFormatter.format}
+            onBlur={setTotal}
           />
         </span>
       </div>

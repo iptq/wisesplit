@@ -5,31 +5,31 @@ const io = new Server({});
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: any
 ) {
 
-  const receiptId = req.body;
+  const receiptId = req.body.receiptId;
 
   console.log(receiptId);
 
-  // if (res.socket?.server.io) {
-  //   console.log("Socket is already running");
-  //   res.end();
-  //   return;
-  // }
+  if (res.socket.server.io) {
+    console.log("Socket is already running");
+    res.end();
+    return;
+  }
 
-  // console.log("Socket is initializing");
-  // const io = new Server(res.socket.server);
-  // res.socket.server.io = io;
+  console.log("Socket is initializing");
+  const io = new Server(res.socket.server);
+  res.socket.server.io = io;
 
-  // io.on("connection", (socket) => {
-  //   console.log("Received new connection");
+  io.on("connection", (socket) => {
+    console.log("Received new connection");
 
-  //   socket.on("input-change", (msg) => {
-  //     socket.broadcast.emit("update-input", msg);
-  //   });
-  // });
+    socket.on("add-input", (msg) => {
+      console.log('server', msg);
+      io.emit("update-input", 'updated input fm');
+    });
+  });
 
-  res.status(200);
   res.end();
 }

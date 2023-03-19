@@ -13,6 +13,7 @@ const Home: NextPage = () => {
       if (typeof id != "string") return;
       router.push(`/receipt/${id}`);
     };
+
     newPage();
   });
 

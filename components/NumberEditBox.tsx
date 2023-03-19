@@ -1,12 +1,18 @@
-import { PrimitiveAtom } from "jotai";
+import { SetStateAction } from "jotai";
+import { Dispatch } from "react";
 import EditBox from "./EditBox";
 
 export interface Props {
-  valueAtom: PrimitiveAtom<number>;
+  valueNumber: number;
   formatter?: (arg: number) => string;
+  onBlur?: (value: number) => void;
 }
 
-export default function NumberEditBox({ valueAtom, formatter }: Props) {
+export default function NumberEditBox({
+  valueNumber,
+  formatter,
+  onBlur,
+}: Props) {
   const validator = (arg: string): number | null => {
     try {
       const n = parseFloat(arg);
@@ -19,10 +25,11 @@ export default function NumberEditBox({ valueAtom, formatter }: Props) {
 
   return (
     <EditBox
-      valueAtom={valueAtom}
+      valueProp={valueNumber}
       inputType="number"
       formatter={formatter ?? ((n) => n.toString())}
       validator={validator}
+      onBlur={onBlur}
     />
   );
 }

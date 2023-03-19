@@ -10,6 +10,7 @@ export default async function handler(
   }
 
   const receipt = req.body;
+  console.log('RECEIPT', receipt);
   const client = await getMongoDBClient();
 
   const receipts = client.collection("receipts");
