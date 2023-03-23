@@ -3,30 +3,35 @@ import { Badge } from "react-bootstrap";
 import EditBox from "./EditBox";
 
 export interface IPerson {
-  name: PrimitiveAtom<string>;
+  name: string;
 }
 
 export interface Props {
-  personAtom: PrimitiveAtom<IPerson>;
-  splitBetweenAtom: PrimitiveAtom<PrimitiveAtom<IPerson>[]>;
+  person: IPerson;
+  removePerson: (person: IPerson) => void;
+  updatePersonName: (person: IPerson, name: string) => void;
 }
 
-export default function Person({ personAtom, splitBetweenAtom }: Props) {
-  const [person] = useAtom(personAtom);
-  const [splitBetween, setSplitBetween] = useAtom(splitBetweenAtom);
-
-  const removeSelf = (_: any) => {
-    setSplitBetween([...splitBetween.filter((x) => x != personAtom)]);
-  };
+export default function Person({
+  person,
+  removePerson,
+  updatePersonName,
+}: Props) {
+  const updatePersonNameOnBlur = (name: string) =>
+    updatePersonName(person, name);
 
   return (
     <>
-      <EditBox valueAtom={person.name} validator={(s) => s} />
+      <EditBox
+        valueProp={person.name}
+        validator={(s) => s}
+        onBlur={updatePersonNameOnBlur}
+      />
 
       <Badge
         bg="danger"
         pill
-        onClick={removeSelf}
+        onClick={() => removePerson(person)}
         style={{ cursor: "pointer" }}
       >
         &times;

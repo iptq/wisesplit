@@ -1,30 +1,38 @@
-import { PrimitiveAtom, useAtom } from "jotai";
+import { Dispatch, SetStateAction } from "react";
 import { Badge, Card } from "react-bootstrap";
 import { moneyFormatter } from "../lib/formatter";
-import { receiptAtom } from "../lib/state";
 import EditBox from "./EditBox";
 import NumberEditBox from "./NumberEditBox";
 import { IPerson } from "./Person";
 import SplitBetween from "./SplitBetween";
 
-export type Receipt = PrimitiveAtom<IReceiptItem>[];
+export type Receipt = IReceiptItem[];
 
 export interface IReceiptItem {
-  name: PrimitiveAtom<string>;
-  price: PrimitiveAtom<number>;
-  splitBetween: PrimitiveAtom<PrimitiveAtom<IPerson>[]>;
+  name: string;
+  price: number;
+  splitBetween: IPerson[];
 }
 
 export interface Props {
-  itemAtom: PrimitiveAtom<IReceiptItem>;
+  curItem: IReceiptItem;
+  receipt: Receipt;
+  setReceipt: Dispatch<SetStateAction<Receipt>>;
 }
 
-export default function ReceiptItem({ itemAtom }: Props) {
-  const [receipt, setReceipt] = useAtom(receiptAtom);
-  const [item, _] = useAtom(itemAtom);
-
+export default function ReceiptItem({ curItem, receipt, setReceipt }: Props) {
   const removeSelf = (_: any) => {
-    setReceipt([...receipt.filter((x) => x != itemAtom)]);
+    setReceipt([...receipt.filter((x) => x != curItem)]);
+  };
+
+  const setReceiptName = (value: string) => {
+    curItem.name = value;
+    setReceipt([...receipt]);
+  };
+
+  const setReceiptPrice = (value: number) => {
+    curItem.price = value;
+    setReceipt([...receipt]);
   };
 
   return (
@@ -32,12 +40,17 @@ export default function ReceiptItem({ itemAtom }: Props) {
       <Card.Header>
         <Card.Title className="d-flex justify-content-between align-items-center">
           <h3>
-            <EditBox valueAtom={item.name} validator={(s) => s} />
+            <EditBox
+              valueProp={curItem.name}
+              validator={(s) => s}
+              onBlur={setReceiptName}
+            />
           </h3>
           <span>
             <NumberEditBox
-              valueAtom={item.price}
+              valueNumber={curItem.price}
               formatter={moneyFormatter.format}
+              onBlur={setReceiptPrice}
             />
             <Badge
               bg="danger"
@@ -52,7 +65,11 @@ export default function ReceiptItem({ itemAtom }: Props) {
       </Card.Header>
 
       <Card.Body>
-        <SplitBetween splitBetweenAtom={item.splitBetween} />
+        <SplitBetween
+          curItem={curItem}
+          receipt={receipt}
+          setReceipt={setReceipt as any}
+        />
       </Card.Body>
     </Card>
   );

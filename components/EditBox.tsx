@@ -1,12 +1,13 @@
 import { PrimitiveAtom, useAtom } from "jotai";
-import { SyntheticEvent, useState } from "react";
+import { Dispatch, SetStateAction, SyntheticEvent, useState } from "react";
 import styled from "styled-components";
 
 export interface Props<T> {
-  valueAtom: PrimitiveAtom<T>;
+  valueProp: T;
   formatter?: (arg: T) => string;
   inputType?: string;
   validator: (arg: string) => T | null;
+  onBlur?: (value: T) => void;
 }
 
 const ClickableContainer = styled.span`
@@ -30,17 +31,17 @@ const EditingBox = styled.input`
 `;
 
 export default function EditBox<T>({
-  valueAtom,
+  valueProp,
   formatter,
   inputType,
   validator,
+  onBlur,
 }: Props<T>) {
-  const [value, setValue] = useAtom(valueAtom);
   const [valueInput, setValueInput] = useState("");
   const [editing, setEditing] = useState(false);
 
   const startEditing = (_: any) => {
-    setValueInput(String(value));
+    setValueInput(String(valueProp));
     setEditing(true);
   };
 
@@ -48,7 +49,7 @@ export default function EditBox<T>({
     e.preventDefault();
     const validateResult = validator(valueInput);
     if (validateResult !== null) {
-      setValue(validateResult);
+      onBlur?.(validateResult);
       setEditing(false);
     }
   };
@@ -69,7 +70,7 @@ export default function EditBox<T>({
   } else {
     return (
       <ClickableContainer onClick={startEditing}>
-        {formatter ? formatter(value) : String(value)}
+        {formatter ? formatter(valueProp) : String(valueProp)}
       </ClickableContainer>
     );
   }
