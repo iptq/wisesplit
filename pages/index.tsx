@@ -1,22 +1,21 @@
-import { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { GetServerSideProps, NextPage } from "next";
+import { getMongoDBClient } from "../lib/getMongoDBClient";
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const client = await getMongoDBClient();
+  const receipts = client.collection("receipts");
+  const newReceipt = await receipts.insertOne({});
+  const id = newReceipt.insertedId.toString();
+
+  return {
+    redirect: {
+      permanent: false,
+      destination: `/receipt/${id}`,
+    },
+  };
+};
 
 const Home: NextPage = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    const newPage = async () => {
-      let res = await fetch("/api/createReceipt", { method: "POST" });
-      let result = await res.json();
-      let id = result.id;
-      if (typeof id != "string") return;
-      router.push(`/receipt/${id}`);
-    };
-
-    newPage();
-  });
-
   return <></>;
 };
 

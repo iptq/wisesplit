@@ -7,7 +7,6 @@ import {
 } from "react";
 import { Button, Form } from "react-bootstrap";
 import Person, { IPerson } from "./Person";
-import { IReceiptItem, Receipt } from "./ReceiptItem";
 
 export interface Props {
   curItem: IReceiptItem;

@@ -1,11 +1,10 @@
-import { Dispatch, SetStateAction } from "react";
+import EditBox from "components/EditBox";
+import NumberEditBox from "components/NumberEditBox";
+import SplitBetween from "components/SplitBetween";
+import { moneyFormatter } from "lib/formatter";
 import { Badge, Card } from "react-bootstrap";
-import { moneyFormatter } from "../lib/formatter";
-import EditBox from "./EditBox";
-import NumberEditBox from "./NumberEditBox";
-import { IPerson } from "./Person";
-import SplitBetween from "./SplitBetween";
-
+import { ReceiptItem as IReceiptItem } from "./slice";
+/*
 export type Receipt = IReceiptItem[];
 
 export interface IReceiptItem {
@@ -13,26 +12,25 @@ export interface IReceiptItem {
   price: number;
   splitBetween: IPerson[];
 }
+ */
 
 export interface Props {
-  curItem: IReceiptItem;
-  receipt: Receipt;
-  setReceipt: Dispatch<SetStateAction<Receipt>>;
+  item: IReceiptItem;
 }
 
-export default function ReceiptItem({ curItem, receipt, setReceipt }: Props) {
+export default function ReceiptItem({ item }: Props) {
   const removeSelf = (_: any) => {
-    setReceipt([...receipt.filter((x) => x != curItem)]);
+    // setReceipt([...receipt.filter((x) => x != curItem)]);
   };
 
   const setReceiptName = (value: string) => {
-    curItem.name = value;
-    setReceipt([...receipt]);
+    // curItem.name = value;
+    // setReceipt([...receipt]);
   };
 
   const setReceiptPrice = (value: number) => {
-    curItem.price = value;
-    setReceipt([...receipt]);
+    // curItem.price = value;
+    // setReceipt([...receipt]);
   };
 
   return (
@@ -41,14 +39,14 @@ export default function ReceiptItem({ curItem, receipt, setReceipt }: Props) {
         <Card.Title className="d-flex justify-content-between align-items-center">
           <h3>
             <EditBox
-              valueProp={curItem.name}
+              valueProp={item.name}
               validator={(s) => s}
               onBlur={setReceiptName}
             />
           </h3>
           <span>
             <NumberEditBox
-              valueNumber={curItem.price}
+              valueNumber={item.price}
               formatter={moneyFormatter.format}
               onBlur={setReceiptPrice}
             />
@@ -66,7 +64,7 @@ export default function ReceiptItem({ curItem, receipt, setReceipt }: Props) {
 
       <Card.Body>
         <SplitBetween
-          curItem={curItem}
+          item={item}
           receipt={receipt}
           setReceipt={setReceipt as any}
         />

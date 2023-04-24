@@ -2,6 +2,8 @@ import { PrimitiveAtom, useAtom } from "jotai";
 import { Dispatch, SetStateAction, SyntheticEvent, useState } from "react";
 import styled from "styled-components";
 
+import styles from "./EditBox.module.scss";
+
 export interface Props<T> {
   valueProp: T;
   formatter?: (arg: T) => string;
@@ -9,26 +11,6 @@ export interface Props<T> {
   validator: (arg: string) => T | null;
   onBlur?: (value: T) => void;
 }
-
-const ClickableContainer = styled.span`
-  display: inline-block;
-  padding: 4px 10px;
-  margin: 4px;
-  border: 1px solid #eee;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: #eee;
-  }
-`;
-
-const EditingBox = styled.input`
-  display: inline-block;
-  padding: 4px 10px;
-  margin: 4px;
-  border: 1px solid #eee;
-  border-radius: 5px;
-`;
 
 export default function EditBox<T>({
   valueProp,
@@ -57,7 +39,8 @@ export default function EditBox<T>({
   if (editing) {
     return (
       <form onSubmit={finalize} style={{ display: "inline" }}>
-        <EditingBox
+        <input
+          className={styles.editingBox}
           autoFocus={true}
           type={inputType ?? "text"}
           step="0.01"
@@ -69,9 +52,9 @@ export default function EditBox<T>({
     );
   } else {
     return (
-      <ClickableContainer onClick={startEditing}>
+      <span className={styles.clickableContainer} onClick={startEditing}>
         {formatter ? formatter(valueProp) : String(valueProp)}
-      </ClickableContainer>
+      </span>
     );
   }
 }
