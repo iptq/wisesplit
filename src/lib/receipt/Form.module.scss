@@ -1,0 +1,19 @@
+.main {
+    max-width: 768px;
+    margin: auto;
+
+    font-family: sans-serif;
+}
+
+.addItemBox {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    outline: none;
+    border: 2px solid lightgray;
+
+    &:focus {
+        border: 2px solid #09c;
+    }
+}
