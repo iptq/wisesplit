@@ -53,18 +53,14 @@ export const receiptTotalAtom = atom((get) => {
   return { subtotal: subtotalSum, totalMap: newTotals };
 });
 
-export function addLine(
-  line: string,
-  receipt: Receipt,
-  setReceipt: SetAtom<Receipt, void>
-) {
+export function addLine(line: string, receipt: Receipt, setReceipt: SetAtom<Receipt, void>) {
   let parsed = parseInput(line);
 
   const name: PrimitiveAtom<string> = atom(parsed.itemName);
   const price: PrimitiveAtom<number> = atom(parsed.price || 0);
-  const splitBetween: PrimitiveAtom<PrimitiveAtom<IPerson>[]> = atom<
-    PrimitiveAtom<IPerson>[]
-  >([...parsed.splitBetween].map((a) => atom<IPerson>({ name: atom(a) })));
+  const splitBetween: PrimitiveAtom<PrimitiveAtom<IPerson>[]> = atom<PrimitiveAtom<IPerson>[]>(
+    [...parsed.splitBetween].map((a) => atom<IPerson>({ name: atom(a) })),
+  );
 
   const newReceiptItem = atom({
     name,

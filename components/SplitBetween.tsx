@@ -28,11 +28,7 @@ export default function SplitBetween({ splitBetweenAtom }: Props) {
     <div>
       Split between ({splitBetween.length}):
       {splitBetween.map((a, i) => (
-        <Person
-          personAtom={a}
-          key={`split-${i}`}
-          splitBetweenAtom={splitBetweenAtom}
-        />
+        <Person personAtom={a} key={`split-${i}`} splitBetweenAtom={splitBetweenAtom} />
       ))}
       <Button onClick={startEditing} variant="default">
         {editing ? (

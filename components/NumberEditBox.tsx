@@ -1,5 +1,5 @@
 import { PrimitiveAtom } from "jotai";
-import EditBox from "./EditBox";
+import EditBox from "../stories/EditBox";
 
 export interface Props {
   valueAtom: PrimitiveAtom<number>;

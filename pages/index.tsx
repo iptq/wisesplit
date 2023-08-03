@@ -7,13 +7,7 @@ import NumberEditBox from "../components/NumberEditBox";
 import ReceiptItem from "../components/ReceiptItem";
 import { moneyFormatter } from "../lib/formatter";
 import { ParsedInputDisplay } from "../lib/parseInput";
-import {
-  addLine,
-  receiptAtom,
-  receiptTotalAtom,
-  totalAtom,
-  receiptAtomToJSON,
-} from "../lib/state";
+import { addLine, receiptAtom, receiptTotalAtom, totalAtom, receiptAtomToJSON } from "../lib/state";
 
 const Home: NextPage = () => {
   const [receipt, setReceipt] = useAtom(receiptAtom);
@@ -77,10 +71,7 @@ const Home: NextPage = () => {
       <div>
         Receipt Total:
         <span style={total < calculated.subtotal ? { color: "red" } : {}}>
-          <NumberEditBox
-            valueAtom={totalAtom}
-            formatter={moneyFormatter.format}
-          />
+          <NumberEditBox valueAtom={totalAtom} formatter={moneyFormatter.format} />
         </span>
       </div>
 

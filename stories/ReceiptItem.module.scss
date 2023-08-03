@@ -1,0 +1,51 @@
+$gray: #e8e8e8;
+
+.receiptItem {
+  font-family: sans-serif;
+  box-shadow: 0 1px 4px $gray;
+  border-radius: 4px;
+  border: 1px solid $gray;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  padding: 8px;
+}
+
+.title {
+  flex-grow: 1;
+}
+
+.price {
+  flex-shrink: 1;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+
+  background-color: $gray;
+  color: #444;
+  font-size: 0.8em;
+  padding: 8px;
+
+  .footerText {
+    margin-bottom: 8px;
+  }
+}
+
+.chips {
+  display: flex;
+  gap: 6px;
+}
+
+.chip {
+  border-radius: 50vh;
+  padding: 4px 8px;
+  border: 1px solid #999;
+  cursor: pointer;
+  background-color: #f0f0f0;
+}

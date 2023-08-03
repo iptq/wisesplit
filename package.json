@@ -3,30 +3,47 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "vite",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.8.6",
+    "@reduxjs/toolkit": "^1.9.5",
     "bootstrap": "^5.2.2",
     "jotai": "^1.8.6",
     "mongodb": "^4.11.0",
+    "nanoid": "^4.0.2",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "18.2.0",
-    "react-redux": "^8.0.4",
+    "react-redux": "^8.1.2",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^7.2.0",
+    "@storybook/addon-interactions": "^7.2.2-alpha.0",
+    "@storybook/addon-links": "^7.2.0",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.2.0",
+    "@storybook/jest": "^0.1.1-next.2",
+    "@storybook/nextjs": "^7.2.0",
+    "@storybook/react": "^7.2.0",
+    "@storybook/testing-library": "^0.2.1-next.0",
     "@types/node": "18.11.4",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
     "@types/styled-components": "^5.1.26",
     "eslint": "8.26.0",
     "eslint-config-next": "12.3.1",
-    "typescript": "4.8.4"
+    "eslint-plugin-storybook": "^0.6.13",
+    "prettier": "^3.0.0",
+    "sass": "^1.64.2",
+    "storybook": "^7.2.0",
+    "typescript": "4.8.4",
+    "vite": "^4.4.8"
   }
 }

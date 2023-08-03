@@ -2,7 +2,7 @@ import { PrimitiveAtom, useAtom } from "jotai";
 import { Badge, Card } from "react-bootstrap";
 import { moneyFormatter } from "../lib/formatter";
 import { receiptAtom } from "../lib/state";
-import EditBox from "./EditBox";
+import EditBox from "../stories/EditBox";
 import NumberEditBox from "./NumberEditBox";
 import { IPerson } from "./Person";
 import SplitBetween from "./SplitBetween";
@@ -35,16 +35,8 @@ export default function ReceiptItem({ itemAtom }: Props) {
             <EditBox valueAtom={item.name} validator={(s) => s} />
           </h3>
           <span>
-            <NumberEditBox
-              valueAtom={item.price}
-              formatter={moneyFormatter.format}
-            />
-            <Badge
-              bg="danger"
-              pill
-              onClick={removeSelf}
-              style={{ cursor: "pointer" }}
-            >
+            <NumberEditBox valueAtom={item.price} formatter={moneyFormatter.format} />
+            <Badge bg="danger" pill onClick={removeSelf} style={{ cursor: "pointer" }}>
               &times;
             </Badge>
           </span>

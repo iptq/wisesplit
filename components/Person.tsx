@@ -1,6 +1,6 @@
 import { PrimitiveAtom, useAtom } from "jotai";
 import { Badge } from "react-bootstrap";
-import EditBox from "./EditBox";
+import EditBox from "../stories/EditBox";
 
 export interface IPerson {
   name: PrimitiveAtom<string>;
@@ -23,12 +23,7 @@ export default function Person({ personAtom, splitBetweenAtom }: Props) {
     <>
       <EditBox valueAtom={person.name} validator={(s) => s} />
 
-      <Badge
-        bg="danger"
-        pill
-        onClick={removeSelf}
-        style={{ cursor: "pointer" }}
-      >
+      <Badge bg="danger" pill onClick={removeSelf} style={{ cursor: "pointer" }}>
         &times;
       </Badge>
     </>
