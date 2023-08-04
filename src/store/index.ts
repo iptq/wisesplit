@@ -19,13 +19,15 @@ const persistConfig = { key: "wisesplit", storage };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
+const unpersistedStore = configureStore(defaultStoreOptions);
+
 export const store = configureStore({
   reducer: persistedReducer,
 });
 
 export const persistedStore = persistStore(store);
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof unpersistedStore.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
