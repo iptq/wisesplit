@@ -21,13 +21,11 @@ export default function EditBox({
 }: EditBoxProps) {
   const [innerValue, setInnerValue] = useState(value);
   const [inputEl, setInputEl] = useState<HTMLInputElement | null>(null);
-  const inputRef = useCallback(
-    (el: HTMLInputElement | null) => {
-      setInputEl(el);
-      el?.select?.();
-    },
-    [inputEl],
-  );
+
+  const inputRef = useCallback((el: HTMLInputElement | null) => {
+    setInputEl(el);
+    el?.select?.();
+  }, []);
 
   useEffect(() => {
     setInnerValue(value);
