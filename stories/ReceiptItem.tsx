@@ -4,6 +4,8 @@ import { ReceiptItem as IReceiptItem } from "../src/store/receiptItem";
 import Chip from "./Chip";
 import { useSelector } from "react-redux";
 import PriceEditBox from "./PriceEditBox";
+import { useAllPeople } from "../lib/hooks";
+import { moneyFormatter } from "../lib/formatter";
 
 export interface ReceiptItemProps {
   receiptItem: IReceiptItem;
@@ -12,6 +14,14 @@ export interface ReceiptItemProps {
 
 export default function ReceiptItem({ receiptItem, updateReceiptItem }: ReceiptItemProps) {
   const { name, price, splitBetween } = receiptItem;
+  const allPeople = useAllPeople();
+  const splitBetweenSet = new Set(splitBetween);
+  const peopleNotSplitSet = new Set(
+    [...allPeople].filter((person) => !splitBetweenSet.has(person)),
+  );
+  // TODO: Some kind of smart ordering?
+  const peopleNotSplit = [...peopleNotSplitSet];
+  const eachCost = splitBetween.length > 0 ? price / splitBetween.length : 0;
 
   const editName = (idx: number) => (name: string) => {
     const newSplitBetween = [...splitBetween];
@@ -21,6 +31,10 @@ export default function ReceiptItem({ receiptItem, updateReceiptItem }: ReceiptI
 
   const newSplitBetween = () => {
     updateReceiptItem({ splitBetween: [...splitBetween, "<click to edit>"] });
+  };
+
+  const addExistingPerson = (idx: number) => () => {
+    updateReceiptItem({ splitBetween: [...splitBetween, peopleNotSplit[idx]] });
   };
 
   return (
@@ -36,7 +50,10 @@ export default function ReceiptItem({ receiptItem, updateReceiptItem }: ReceiptI
 
       <div className={styles.body}></div>
       <div className={styles.footer}>
-        <span className={styles.footerText}>Split between ({splitBetween.length}):</span>
+        <span className={styles.footerText}>
+          Split between <b>{splitBetween.length}</b> people ({moneyFormatter.format(eachCost)}{" "}
+          each):
+        </span>
 
         <div className={styles.chips}>
           {splitBetween.map((name, idx) => (
@@ -44,6 +61,10 @@ export default function ReceiptItem({ receiptItem, updateReceiptItem }: ReceiptI
           ))}
 
           <Chip text="+" outerProps={{ onClick: newSplitBetween }} />
+
+          {peopleNotSplit.map((name, idx) => (
+            <Chip key={name} text={name} outerProps={{ onClick: addExistingPerson(idx) }} />
+          ))}
         </div>
       </div>
     </div>
