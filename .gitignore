@@ -8,10 +8,6 @@
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
-
 # production
 /build
 
@@ -39,3 +35,4 @@ yarn-error.log*
 next-env.d.ts
 
 /dist
+/storybook-static
