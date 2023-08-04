@@ -2,10 +2,10 @@ import EditBox from "./EditBox";
 import styles from "./ReceiptItem.module.scss";
 import { ReceiptItem as IReceiptItem } from "../src/store/receiptItem";
 import Chip from "./Chip";
-import { useSelector } from "react-redux";
 import PriceEditBox from "./PriceEditBox";
 import { useAllPeople } from "../lib/hooks";
 import { moneyFormatter } from "../lib/formatter";
+import DeleteButton from "./DeleteButton";
 
 export interface ReceiptItemProps {
   receiptItem: IReceiptItem;
@@ -30,11 +30,19 @@ export default function ReceiptItem({ receiptItem, updateReceiptItem }: ReceiptI
   };
 
   const newSplitBetween = () => {
-    updateReceiptItem({ splitBetween: [...splitBetween, "<click to edit>"] });
+    const defaultName = "click to edit...";
+    if (splitBetween.indexOf(defaultName) !== -1) return;
+    updateReceiptItem({ splitBetween: [...splitBetween, defaultName] });
   };
 
   const addExistingPerson = (idx: number) => () => {
     updateReceiptItem({ splitBetween: [...splitBetween, peopleNotSplit[idx]] });
+  };
+
+  const deleteSplitter = (idx: number) => () => {
+    const newSplitBetween = [...splitBetween];
+    newSplitBetween.splice(idx, 1);
+    updateReceiptItem({ splitBetween: newSplitBetween });
   };
 
   return (
@@ -45,6 +53,7 @@ export default function ReceiptItem({ receiptItem, updateReceiptItem }: ReceiptI
         </div>
         <div className={styles.price}>
           <PriceEditBox value={price} setValue={(value) => updateReceiptItem({ price: value })} />
+          <DeleteButton />
         </div>
       </div>
 
@@ -57,7 +66,13 @@ export default function ReceiptItem({ receiptItem, updateReceiptItem }: ReceiptI
 
         <div className={styles.chips}>
           {splitBetween.map((name, idx) => (
-            <Chip key={name} text={name} updateText={editName(idx)} active />
+            <Chip
+              key={name}
+              text={name}
+              updateText={editName(idx)}
+              onDelete={deleteSplitter(idx)}
+              active
+            />
           ))}
 
           <Chip text="+" outerProps={{ onClick: newSplitBetween }} />

@@ -1,4 +1,8 @@
 .chip {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+
   border-radius: 50vh;
   padding: 4px 8px;
   border: 1px solid #999;
@@ -6,7 +10,16 @@
   background-color: #f0f0f0;
 }
 
+.chip.hasDelete {
+  padding-right: 4px;
+
+  .deleteButton {
+    width: 12px;
+    height: 12px;
+    font-size: 8px;
+  }
+}
+
 .chip.active {
-  background-color: #090;
-  color: white;
+  background-color: #b5f0b7;
 }

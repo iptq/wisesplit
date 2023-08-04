@@ -30,7 +30,7 @@ export default function Toolbar() {
     <div className={styles.toolbar}>
       <div className="container">
         <div className={styles.actionRow}>
-          <button onClick={addNewItem}>Add</button>
+          <button onClick={addNewItem}>&#x2795; Add</button>
           <PriceEditBox value={total} setValue={updateTotal} />
         </div>
 

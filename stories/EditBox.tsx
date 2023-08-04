@@ -69,7 +69,12 @@ export default function EditBox({
     );
   } else {
     return (
-      <span className={textClassName} onClick={startEditing} data-testid="editBox-view">
+      <span
+        className={textClassName}
+        onClick={startEditing}
+        style={{ textDecoration: "underline", textDecorationStyle: "dotted" }}
+        data-testid="editBox-view"
+      >
         {format ? format(value) : value}
       </span>
     );
