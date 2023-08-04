@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Provider } from "react-redux";
-import { storeOptions as defaultStoreOptions } from "../src/store";
+import { defaultStoreOptions as defaultStoreOptions } from "../src/store";
 import { ConfigureStoreOptions, configureStore } from "@reduxjs/toolkit";
 import { receipt1 } from "./data/receipts";
 import Toolbar from "./Toolbar";
