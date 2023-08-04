@@ -5,6 +5,7 @@ import PriceEditBox from "./PriceEditBox";
 import ReceiptTotal from "./ReceiptTotal";
 import styles from "./Toolbar.module.scss";
 import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { nanoid } from "nanoid";
 
 export default function Toolbar() {
@@ -43,7 +44,7 @@ export default function Toolbar() {
               <AddIcon className={styles.icon} /> Add
             </button>
             <button className={styles.button} onClick={clearEverything}>
-              &#x21BA; Clear
+              <DeleteIcon className={styles.icon} /> Clear
             </button>
           </div>
           <PriceEditBox value={total} setValue={updateTotal} />
