@@ -15,11 +15,20 @@ export default function ReceiptEditor() {
     dispatch(receiptItemSlice.actions.updateOne({ id, changes: update }));
   };
 
+  const deleteItem = (id: string) => () => {
+    dispatch(receiptItemSlice.actions.deleteOne(id));
+  };
+
   return (
     <div className="container">
       <div className={styles.receiptList}>
         {receiptItems.map((item) => (
-          <ReceiptItem key={item.id} receiptItem={item} updateReceiptItem={updateItem(item.id)} />
+          <ReceiptItem
+            key={item.id}
+            receiptItem={item}
+            updateReceiptItem={updateItem(item.id)}
+            deleteReceiptItem={deleteItem(item.id)}
+          />
         ))}
       </div>
     </div>

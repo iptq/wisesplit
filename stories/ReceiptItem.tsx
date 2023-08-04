@@ -10,9 +10,14 @@ import DeleteButton from "./DeleteButton";
 export interface ReceiptItemProps {
   receiptItem: IReceiptItem;
   updateReceiptItem: (_: Partial<IReceiptItem>) => void;
+  deleteReceiptItem?: () => void;
 }
 
-export default function ReceiptItem({ receiptItem, updateReceiptItem }: ReceiptItemProps) {
+export default function ReceiptItem({
+  receiptItem,
+  updateReceiptItem,
+  deleteReceiptItem,
+}: ReceiptItemProps) {
   const { name, price, splitBetween } = receiptItem;
   const allPeople = useAllPeople();
   const splitBetweenSet = new Set(splitBetween);
@@ -53,7 +58,7 @@ export default function ReceiptItem({ receiptItem, updateReceiptItem }: ReceiptI
         </div>
         <div className={styles.price}>
           <PriceEditBox value={price} setValue={(value) => updateReceiptItem({ price: value })} />
-          <DeleteButton />
+          <DeleteButton onClick={deleteReceiptItem} />
         </div>
       </div>
 

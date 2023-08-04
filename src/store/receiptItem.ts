@@ -20,6 +20,7 @@ export const receiptItemSlice = createSlice({
   reducers: {
     createNew: receiptItemAdapter.addOne,
     updateOne: receiptItemAdapter.updateOne,
+    deleteOne: receiptItemAdapter.removeOne,
   },
 });
 
