@@ -15,6 +15,8 @@ type Story = StoryObj<typeof ReceiptItem>;
 export const Default: Story = {
   args: {
     receiptItem: {
+      id: "id1",
+      createdAt: Date.now(),
       name: "charcuterie board",
       price: 30,
       splitBetween: ["michael", "connie", "yichen"],

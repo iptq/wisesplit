@@ -1,18 +1,20 @@
-import { useSelector } from "react-redux";
-import { ReceiptItem, receiptItemSelectors } from "./store/receiptItem";
+import { ReceiptItem, receiptItemSelectors } from "../src/store/receiptItem";
+import { useAppSelector } from "../src/store";
+import styles from "./ReceiptTotal.module.scss";
+import { moneyFormatter } from "../lib/formatter";
 
 export default function ReceiptTotal() {
   const totalValue = 300;
-  const receiptItems = useSelector((state) => receiptItemSelectors.selectAll(state));
+  const receiptItems = useAppSelector((state) => receiptItemSelectors.selectAll(state));
 
   const total = computeTotal(totalValue, receiptItems);
 
   return (
     <>
-      <ul>
+      <ul className={styles.list}>
         {[...total.totalMap.entries()].map(([name, amount]) => (
-          <li key={name}>
-            {name} : {amount}
+          <li key={name} className={styles.person}>
+            {name} : {moneyFormatter.format(amount)}
           </li>
         ))}
       </ul>

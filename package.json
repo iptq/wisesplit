@@ -4,15 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
+    "build": "vite build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "bootstrap": "^5.2.2",
+    "classnames": "^2.3.2",
     "jotai": "^1.8.6",
     "mongodb": "^4.11.0",
     "nanoid": "^4.0.2",

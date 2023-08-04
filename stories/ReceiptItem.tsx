@@ -1,6 +1,8 @@
 import EditBox from "./EditBox";
 import styles from "./ReceiptItem.module.scss";
 import { ReceiptItem as IReceiptItem } from "../src/store/receiptItem";
+import Chip from "./Chip";
+import { useSelector } from "react-redux";
 
 export interface ReceiptItemProps {
   receiptItem: IReceiptItem;
@@ -10,7 +12,10 @@ export interface ReceiptItemProps {
 export default function ReceiptItem({ receiptItem, updateReceiptItem }: ReceiptItemProps) {
   const { name, price, splitBetween } = receiptItem;
 
-  const editName = (idx) => (name) => {
+  const x = useSelector((state) => state);
+  console.log("state", x);
+
+  const editName = (idx: number) => (name: string) => {
     const newSplitBetween = [...splitBetween];
     newSplitBetween[idx] = name;
     updateReceiptItem({ splitBetween: newSplitBetween });
@@ -37,22 +42,12 @@ export default function ReceiptItem({ receiptItem, updateReceiptItem }: ReceiptI
 
         <div className={styles.chips}>
           {splitBetween.map((name, idx) => (
-            <Chip key={name} name={name} editName={editName(idx)} />
+            <Chip key={name} text={name} updateText={editName(idx)} active />
           ))}
 
-          <div className={styles.chip} onClick={newSplitBetween}>
-            +
-          </div>
+          <Chip text="+" outerProps={{ onClick: newSplitBetween }} />
         </div>
       </div>
-    </div>
-  );
-}
-
-function Chip({ name, editName }) {
-  return (
-    <div className={styles.chip}>
-      <EditBox value={name} setValue={editName} />
     </div>
   );
 }

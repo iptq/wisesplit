@@ -1,14 +1,22 @@
 import { SyntheticEvent, useCallback, useEffect, useState } from "react";
-import styles from "./EditBox.module.scss";
 
-export interface Props {
+export interface EditBoxProps {
   value: string;
   setValue?: (_: string) => void;
   inputType?: string;
   validator?: (arg: string) => string;
+  inputClassName?: string;
+  textClassName?: string;
 }
 
-export default function EditBox({ value, setValue, inputType, validator }: Props) {
+export default function EditBox({
+  inputClassName,
+  textClassName,
+  value,
+  setValue,
+  inputType,
+  validator,
+}: EditBoxProps) {
   const [innerValue, setInnerValue] = useState(value);
   const [inputEl, setInputEl] = useState<HTMLInputElement | null>(null);
   const inputRef = useCallback(
@@ -46,7 +54,7 @@ export default function EditBox({ value, setValue, inputType, validator }: Props
     return (
       <form onSubmit={finalize} style={{ display: "inline" }} data-testid="editBox-form">
         <input
-          className={styles.editingBox}
+          className={inputClassName}
           autoFocus={true}
           type={inputType ?? "text"}
           value={innerValue}
@@ -59,7 +67,7 @@ export default function EditBox({ value, setValue, inputType, validator }: Props
     );
   } else {
     return (
-      <span className={styles.clickableContainer} onClick={startEditing} data-testid="editBox-view">
+      <span className={textClassName} onClick={startEditing} data-testid="editBox-view">
         {value}
       </span>
     );
