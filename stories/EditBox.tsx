@@ -4,9 +4,10 @@ export interface EditBoxProps {
   value: string;
   setValue?: (_: string) => void;
   inputType?: string;
-  validator?: (arg: string) => string;
+  validator?: (arg: string) => string | null;
   inputClassName?: string;
   textClassName?: string;
+  format?: (_: string) => string;
 }
 
 export default function EditBox({
@@ -16,6 +17,7 @@ export default function EditBox({
   setValue,
   inputType,
   validator,
+  format,
 }: EditBoxProps) {
   const [innerValue, setInnerValue] = useState(value);
   const [inputEl, setInputEl] = useState<HTMLInputElement | null>(null);
@@ -68,7 +70,7 @@ export default function EditBox({
   } else {
     return (
       <span className={textClassName} onClick={startEditing} data-testid="editBox-view">
-        {value}
+        {format ? format(value) : value}
       </span>
     );
   }

@@ -3,6 +3,7 @@ import styles from "./ReceiptItem.module.scss";
 import { ReceiptItem as IReceiptItem } from "../src/store/receiptItem";
 import Chip from "./Chip";
 import { useSelector } from "react-redux";
+import PriceEditBox from "./PriceEditBox";
 
 export interface ReceiptItemProps {
   receiptItem: IReceiptItem;
@@ -11,9 +12,6 @@ export interface ReceiptItemProps {
 
 export default function ReceiptItem({ receiptItem, updateReceiptItem }: ReceiptItemProps) {
   const { name, price, splitBetween } = receiptItem;
-
-  const x = useSelector((state) => state);
-  console.log("state", x);
 
   const editName = (idx: number) => (name: string) => {
     const newSplitBetween = [...splitBetween];
@@ -32,7 +30,7 @@ export default function ReceiptItem({ receiptItem, updateReceiptItem }: ReceiptI
           <EditBox value={name} setValue={(value) => updateReceiptItem({ name: value })} />
         </div>
         <div className={styles.price}>
-          <EditBox value={price} setValue={(value) => updateReceiptItem({ price: value })} />
+          <PriceEditBox value={price} setValue={(value) => updateReceiptItem({ price: value })} />
         </div>
       </div>
 

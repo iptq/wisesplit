@@ -1,10 +1,12 @@
 import { ConfigureStoreOptions, configureStore } from "@reduxjs/toolkit";
 import { receiptItemSlice } from "./receiptItem";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { totalSlice } from "./total";
 
-export const storeOptions: ConfigureStoreOptions = {
+export const storeOptions = {
   reducer: {
     receiptItem: receiptItemSlice.reducer,
+    total: totalSlice.reducer,
   },
 };
 

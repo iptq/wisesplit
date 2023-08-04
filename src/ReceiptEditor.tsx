@@ -16,12 +16,12 @@ export default function ReceiptEditor() {
   };
 
   return (
-    <>
+    <div className="container">
       <div className={styles.receiptList}>
         {receiptItems.map((item) => (
           <ReceiptItem key={item.id} receiptItem={item} updateReceiptItem={updateItem(item.id)} />
         ))}
       </div>
-    </>
+    </div>
   );
 }

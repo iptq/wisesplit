@@ -4,7 +4,7 @@ import styles from "./ReceiptTotal.module.scss";
 import { moneyFormatter } from "../lib/formatter";
 
 export default function ReceiptTotal() {
-  const totalValue = 300;
+  const totalValue = useAppSelector((state) => state.total.value);
   const receiptItems = useAppSelector((state) => receiptItemSelectors.selectAll(state));
 
   const total = computeTotal(totalValue, receiptItems);
