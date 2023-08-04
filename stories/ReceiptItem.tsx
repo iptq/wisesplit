@@ -54,10 +54,16 @@ export default function ReceiptItem({
     <div className={styles.receiptItem}>
       <div className={styles.header}>
         <div className={styles.title}>
-          <EditBox value={name} setValue={(value) => updateReceiptItem({ name: value })} />
+          <EditBox
+            value={name}
+            setValue={(value) => updateReceiptItem({ name: value })}
+          />
         </div>
         <div className={styles.price}>
-          <PriceEditBox value={price} setValue={(value) => updateReceiptItem({ price: value })} />
+          <PriceEditBox
+            value={price}
+            setValue={(value) => updateReceiptItem({ price: value })}
+          />
           <DeleteButton onClick={deleteReceiptItem} />
         </div>
       </div>
@@ -65,8 +71,8 @@ export default function ReceiptItem({
       <div className={styles.body}></div>
       <div className={styles.footer}>
         <span className={styles.footerText}>
-          Split between <b>{splitBetween.length}</b> people ({moneyFormatter.format(eachCost)}{" "}
-          each):
+          Split between <b>{splitBetween.length}</b> people (
+          {moneyFormatter.format(eachCost)} each):
         </span>
 
         <div className={styles.chips}>
@@ -83,7 +89,11 @@ export default function ReceiptItem({
           <Chip text="+" outerProps={{ onClick: newSplitBetween }} />
 
           {peopleNotSplit.map((name, idx) => (
-            <Chip key={name} text={name} outerProps={{ onClick: addExistingPerson(idx) }} />
+            <Chip
+              key={name}
+              text={name}
+              outerProps={{ onClick: addExistingPerson(idx) }}
+            />
           ))}
         </div>
       </div>

@@ -1,5 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fireEvent, userEvent, waitFor, within } from "@storybook/testing-library";
+import {
+  fireEvent,
+  userEvent,
+  waitFor,
+  within,
+} from "@storybook/testing-library";
 import { expect } from "@storybook/jest";
 
 import EditBox from "./EditBox";
@@ -25,6 +30,8 @@ export const Default: Story = {
       fireEvent.submit(canvas.getByTestId("editBox-form"));
     });
 
-    await waitFor(() => expect(args.setValue).toBeCalledWith(`${args.value}, world`));
+    await waitFor(() =>
+      expect(args.setValue).toBeCalledWith(`${args.value}, world`),
+    );
   },
 };

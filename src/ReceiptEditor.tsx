@@ -9,7 +9,9 @@ import styles from "./ReceiptEditor.module.scss";
 
 export default function ReceiptEditor() {
   const dispatch = useAppDispatch();
-  const receiptItems = useAppSelector((state) => receiptItemSelectors.selectAll(state));
+  const receiptItems = useAppSelector((state) =>
+    receiptItemSelectors.selectAll(state),
+  );
 
   const updateItem = (id: string) => (update: Partial<IReceiptItem>) => {
     dispatch(receiptItemSlice.actions.updateOne({ id, changes: update }));

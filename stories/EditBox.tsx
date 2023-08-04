@@ -52,7 +52,11 @@ export default function EditBox({
 
   if (isEditing) {
     return (
-      <form onSubmit={finalize} style={{ display: "inline" }} data-testid="editBox-form">
+      <form
+        onSubmit={finalize}
+        style={{ display: "inline" }}
+        data-testid="editBox-form"
+      >
         <input
           className={inputClassName}
           autoFocus={true}

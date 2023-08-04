@@ -5,7 +5,9 @@ import { moneyFormatter } from "../lib/formatter";
 
 export default function ReceiptTotal() {
   const totalValue = useAppSelector((state) => state.total.value);
-  const receiptItems = useAppSelector((state) => receiptItemSelectors.selectAll(state));
+  const receiptItems = useAppSelector((state) =>
+    receiptItemSelectors.selectAll(state),
+  );
 
   const total = computeTotal(totalValue, receiptItems);
 

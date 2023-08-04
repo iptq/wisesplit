@@ -11,15 +11,25 @@
 }
 
 .chip.hasDelete {
-  padding-right: 4px;
+  padding-right: 3px;
 
   .deleteButton {
-    width: 12px;
-    height: 12px;
-    font-size: 8px;
+    $size: 16px;
+    width: $size;
+    height: $size;
+    font-size: 10px;
   }
 }
 
 .chip.active {
   background-color: #b5f0b7;
+}
+
+.editBox {
+  padding: 0;
+  background-color: inherit;
+  border: 0;
+  outline: 0;
+  font-family: inherit;
+  font-size: 13px;
 }

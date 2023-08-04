@@ -14,14 +14,34 @@ export interface ChipProps {
   outerProps?: HTMLAttributes<HTMLDivElement>;
 }
 
-export default function Chip({ active, text, updateText, outerProps, onDelete }: ChipProps) {
+export default function Chip({
+  active,
+  text,
+  updateText,
+  outerProps,
+  onDelete,
+}: ChipProps) {
   return (
     <div
-      className={classNames(styles.chip, onDelete && styles.hasDelete, active && styles.active)}
+      className={classNames(
+        styles.chip,
+        onDelete && styles.hasDelete,
+        active && styles.active,
+      )}
       {...outerProps}
     >
-      {updateText ? <EditBox value={text} setValue={updateText} /> : text}
-      {onDelete && <DeleteButton className={styles.deleteButton} onClick={onDelete} />}
+      {updateText ? (
+        <EditBox
+          value={text}
+          setValue={updateText}
+          inputClassName={styles.editBox}
+        />
+      ) : (
+        text
+      )}
+      {onDelete && (
+        <DeleteButton className={styles.deleteButton} onClick={onDelete} />
+      )}
     </div>
   );
 }

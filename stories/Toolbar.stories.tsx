@@ -13,7 +13,10 @@ const meta: Meta<typeof Toolbar> = {
 export default meta;
 type Story = StoryObj<typeof Toolbar>;
 
-const storeOptions: ConfigureStoreOptions = { ...defaultStoreOptions, preloadedState: receipt1 };
+const storeOptions: ConfigureStoreOptions = {
+  ...defaultStoreOptions,
+  preloadedState: receipt1,
+};
 
 export const Default: Story = {
   render: () => (
