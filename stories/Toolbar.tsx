@@ -4,6 +4,7 @@ import { setTotal } from "../src/store/total";
 import PriceEditBox from "./PriceEditBox";
 import ReceiptTotal from "./ReceiptTotal";
 import styles from "./Toolbar.module.scss";
+import AddIcon from "@mui/icons-material/Add";
 import { nanoid } from "nanoid";
 
 export default function Toolbar() {
@@ -26,11 +27,25 @@ export default function Toolbar() {
     dispatch(setTotal(newTotal));
   };
 
+  const clearEverything = () => {
+    if (confirm("Are you sure you want to delete all items?")) {
+      dispatch(receiptItemSlice.actions.deleteAll());
+      dispatch(setTotal(0));
+    }
+  };
+
   return (
     <div className={styles.toolbar}>
       <div className="container">
         <div className={styles.actionRow}>
-          <button onClick={addNewItem}>&#x2795; Add</button>
+          <div className={styles.buttons}>
+            <button className={styles.button} onClick={addNewItem}>
+              <AddIcon className={styles.icon} /> Add
+            </button>
+            <button className={styles.button} onClick={clearEverything}>
+              &#x21BA; Clear
+            </button>
+          </div>
           <PriceEditBox value={total} setValue={updateTotal} />
         </div>
 

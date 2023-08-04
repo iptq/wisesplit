@@ -21,6 +21,7 @@ export const receiptItemSlice = createSlice({
     createNew: receiptItemAdapter.addOne,
     updateOne: receiptItemAdapter.updateOne,
     deleteOne: receiptItemAdapter.removeOne,
+    deleteAll: receiptItemAdapter.removeAll,
   },
 });
 
