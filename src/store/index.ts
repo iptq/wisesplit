@@ -1,4 +1,4 @@
-import { ConfigureStoreOptions, combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { receiptItemSlice } from "./receiptItem";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { totalSlice } from "./total";

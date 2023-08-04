@@ -44,7 +44,7 @@ export default function parseInput(line: string): ParsedInput {
   let price = undefined;
   const splitBetween = new Set<string>();
   const final = [];
-  for (let word of words) {
+  for (const word of words) {
     if (word.startsWith("$") && word.length > 1) {
       price = parseFloat(word.slice(1));
       continue;

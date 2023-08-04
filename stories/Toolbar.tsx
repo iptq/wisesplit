@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../src/store";
 import { receiptItemSlice } from "../src/store/receiptItem";
 import styles from "./Toolbar.module.scss";
 import PriceEditBox from "./PriceEditBox";
-import { setTotal, totalSlice } from "../src/store/total";
+import { setTotal } from "../src/store/total";
 
 export default function Toolbar() {
   const dispatch = useAppDispatch();

@@ -32,7 +32,7 @@ function computeTotal(totalValue: number, receiptItems: ReceiptItem[]): Total {
   let subtotalSum = 0;
 
   for (const item of receiptItems) {
-    const { name, price, splitBetween } = item;
+    const { price, splitBetween } = item;
     const numSplitters = splitBetween.length;
     if (numSplitters == 0) continue;
 

@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fireEvent, userEvent, waitFor, within } from "@storybook/testing-library";
 import { expect } from "@storybook/jest";
-import { action } from "@storybook/addon-actions";
 
 import EditBox from "./EditBox";
 

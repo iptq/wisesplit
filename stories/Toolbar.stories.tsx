@@ -21,6 +21,4 @@ export const Default: Story = {
       <Toolbar />
     </Provider>
   ),
-
-  play: async ({ args, canvasElement, step }) => {},
 };

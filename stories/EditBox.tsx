@@ -33,7 +33,7 @@ export default function EditBox({
 
   const [isEditing, setIsEditing] = useState(false);
 
-  const startEditing = (_: any) => {
+  const startEditing = () => {
     setInnerValue(String(value));
     setIsEditing(true);
     inputEl?.select?.();

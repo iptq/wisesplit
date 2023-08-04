@@ -22,5 +22,4 @@ export const Default: Story = {
       splitBetween: ["michael", "connie", "yichen"],
     },
   },
-  play: async ({ args, canvasElement, step }) => {},
 };
