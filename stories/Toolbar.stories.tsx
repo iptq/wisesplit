@@ -1,10 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
-import { Provider } from "react-redux";
-import { defaultStoreOptions as defaultStoreOptions } from "../src/store";
-import { ConfigureStoreOptions, configureStore } from "@reduxjs/toolkit";
-import { receipt1 } from "./data/receipts";
+import { defaultStoreOptions } from "../src/store";
 import Toolbar from "./Toolbar";
+import { receipt1 } from "./data/receipts";
+import { ConfigureStoreOptions, configureStore } from "@reduxjs/toolkit";
+import type { Meta, StoryObj } from "@storybook/react";
+import { Provider } from "react-redux";
 
 const meta: Meta<typeof Toolbar> = {
   component: Toolbar,

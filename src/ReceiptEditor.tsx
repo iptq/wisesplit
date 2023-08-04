@@ -1,11 +1,11 @@
+import ReceiptItem from "../stories/ReceiptItem";
+import styles from "./ReceiptEditor.module.scss";
+import { useAppDispatch, useAppSelector } from "./store";
 import {
   ReceiptItem as IReceiptItem,
   receiptItemSelectors,
   receiptItemSlice,
 } from "./store/receiptItem";
-import ReceiptItem from "../stories/ReceiptItem";
-import { useAppDispatch, useAppSelector } from "./store";
-import styles from "./ReceiptEditor.module.scss";
 
 export default function ReceiptEditor() {
   const dispatch = useAppDispatch();

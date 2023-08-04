@@ -1,8 +1,8 @@
-import EditBox from "./EditBox";
 import styles from "./Chip.module.scss";
+import DeleteButton from "./DeleteButton";
+import EditBox from "./EditBox";
 import classNames from "classnames";
 import { HTMLAttributes, MouseEventHandler } from "react";
-import DeleteButton from "./DeleteButton";
 
 export interface ChipProps {
   text: string;

@@ -1,3 +1,5 @@
+import EditBox from "./EditBox";
+import { expect } from "@storybook/jest";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
   fireEvent,
@@ -5,9 +7,6 @@ import {
   waitFor,
   within,
 } from "@storybook/testing-library";
-import { expect } from "@storybook/jest";
-
-import EditBox from "./EditBox";
 
 const meta: Meta<typeof EditBox> = {
   component: EditBox,

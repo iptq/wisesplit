@@ -1,11 +1,11 @@
-import EditBox from "./EditBox";
-import styles from "./ReceiptItem.module.scss";
+import { moneyFormatter } from "../lib/formatter";
+import { useAllPeople } from "../lib/hooks";
 import { ReceiptItem as IReceiptItem } from "../src/store/receiptItem";
 import Chip from "./Chip";
-import PriceEditBox from "./PriceEditBox";
-import { useAllPeople } from "../lib/hooks";
-import { moneyFormatter } from "../lib/formatter";
 import DeleteButton from "./DeleteButton";
+import EditBox from "./EditBox";
+import PriceEditBox from "./PriceEditBox";
+import styles from "./ReceiptItem.module.scss";
 
 export interface ReceiptItemProps {
   receiptItem: IReceiptItem;

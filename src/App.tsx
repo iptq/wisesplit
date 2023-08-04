@@ -1,9 +1,8 @@
-import "../styles/globals.scss";
-
-import { Provider } from "react-redux";
-import { persistedStore, store } from "./store";
-import ReceiptEditor from "./ReceiptEditor";
 import Toolbar from "../stories/Toolbar";
+import "../styles/globals.scss";
+import ReceiptEditor from "./ReceiptEditor";
+import { persistedStore, store } from "./store";
+import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 export default function App() {

@@ -1,5 +1,5 @@
-import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import { RootState } from ".";
+import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 
 export interface ReceiptItem {
   id: string;

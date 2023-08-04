@@ -1,6 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import ReceiptItem from "./ReceiptItem";
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof ReceiptItem> = {
   component: ReceiptItem,

@@ -1,7 +1,7 @@
-import { ReceiptItem, receiptItemSelectors } from "../src/store/receiptItem";
-import { useAppSelector } from "../src/store";
-import styles from "./ReceiptTotal.module.scss";
 import { moneyFormatter } from "../lib/formatter";
+import { useAppSelector } from "../src/store";
+import { ReceiptItem, receiptItemSelectors } from "../src/store/receiptItem";
+import styles from "./ReceiptTotal.module.scss";
 
 export default function ReceiptTotal() {
   const totalValue = useAppSelector((state) => state.total.value);

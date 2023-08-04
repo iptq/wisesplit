@@ -1,10 +1,10 @@
-import { nanoid } from "nanoid";
-import ReceiptTotal from "./ReceiptTotal";
 import { useAppDispatch, useAppSelector } from "../src/store";
 import { receiptItemSlice } from "../src/store/receiptItem";
-import styles from "./Toolbar.module.scss";
-import PriceEditBox from "./PriceEditBox";
 import { setTotal } from "../src/store/total";
+import PriceEditBox from "./PriceEditBox";
+import ReceiptTotal from "./ReceiptTotal";
+import styles from "./Toolbar.module.scss";
+import { nanoid } from "nanoid";
 
 export default function Toolbar() {
   const dispatch = useAppDispatch();

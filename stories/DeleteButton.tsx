@@ -1,6 +1,6 @@
-import { HTMLAttributes } from "react";
 import styles from "./DeleteButton.module.scss";
 import classNames from "classnames";
+import { HTMLAttributes } from "react";
 
 export default function DeleteButton({
   className,
